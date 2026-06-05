@@ -1,44 +1,26 @@
 {
   "project_info": {
-    "project_number": "263851361821",
-    "project_id": "dhgamesdf4",
-    "storage_bucket": "dhgamesdf4.appspot.com"
+    "project_number": "YOUR_PROJECT_NUMBER",
+    "project_id": "YOUR_FIREBASE_PROJECT_ID",
+    "storage_bucket": "YOUR_FIREBASE_PROJECT_ID.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:263851361821:android:c85c4b106feac5e8ffa8f4",
+        "mobilesdk_app_id": "1:YOUR_PROJECT_NUMBER:android:YOUR_APP_HASH",
         "android_client_info": {
-          "package_name": "com.example.dhgamesdf4"
+          "package_name": "com.marketdata.sfmcdemo"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "263851361821-7vegi5eliljeesqq6mqdcfh1a18tf6lg.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.dhgamesdf4",
-            "certificate_hash": "9ff47971c1820e3998fe2c8927f1f3f32defc2a0"
-          }
-        },
-        {
-          "client_id": "263851361821-k04m8969gvev5k841k645t95t1v50ll7.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCHVWASWFQXefGIlAV9J7nhuvMX8f6R3NM"
+          "current_key": "YOUR_FIREBASE_API_KEY"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "263851361821-k04m8969gvev5k841k645t95t1v50ll7.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

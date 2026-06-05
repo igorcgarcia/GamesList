@@ -1,16 +1,46 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.DHGamesDF4" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark theme mirrors the light theme for now -->
+    <style name="Theme.MarketdataSFMC" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/md_navy_800</item>
+        <item name="colorPrimaryVariant">@color/md_navy_900</item>
+        <item name="colorOnPrimary">@color/md_white</item>
+        <item name="colorSecondary">@color/md_orange_500</item>
+        <item name="colorSecondaryVariant">@color/md_orange_600</item>
+        <item name="colorOnSecondary">@color/md_white</item>
+        <item name="android:colorBackground">@color/md_gray_900</item>
+        <item name="colorSurface">@color/md_gray_700</item>
+        <item name="colorOnSurface">@color/md_white</item>
+        <item name="colorError">@color/md_error</item>
+        <item name="android:statusBarColor">@color/md_navy_900</item>
+        <item name="android:navigationBarColor">@color/md_gray_900</item>
+        <item name="materialButtonStyle">@style/Widget.Marketdata.Button</item>
+        <item name="cardViewStyle">@style/Widget.Marketdata.CardView</item>
+    </style>
+
+    <style name="Theme.MarketdataSFMC.Splash" parent="Theme.MarketdataSFMC">
+        <item name="android:windowBackground">@color/md_navy_900</item>
+    </style>
+
+    <style name="Widget.Marketdata.Button" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/md_navy_600</item>
+        <item name="android:textColor">@color/md_white</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="android:minHeight">48dp</item>
+    </style>
+
+    <style name="Widget.Marketdata.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardElevation">4dp</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="contentPadding">0dp</item>
+        <item name="cardBackgroundColor">@color/md_gray_700</item>
+    </style>
+
+    <style name="Widget.Marketdata.BottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="backgroundTint">@color/md_gray_700</item>
+        <item name="itemIconTint">@color/selector_bottom_nav</item>
+        <item name="itemTextColor">@color/selector_bottom_nav</item>
+        <item name="elevation">8dp</item>
+        <item name="labelVisibilityMode">labeled</item>
     </style>
 </resources>

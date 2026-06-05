@@ -1,17 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="green">#009688</color>
-    <color name="gray_light">#C0CCDA</color>
-    <color name="redv">#EA2427</color>
-    <color name="green_dark">#00796B</color>
-    <color name="blue_dark">#1F2D3D</color>
-    <color name="gray_mid">#8492A6</color>
-    <color name="gray_bg">#DDDDDD</color>
+    <!-- Marketdata Primary Palette – Deep Navy Blue -->
+    <color name="md_navy_900">#001A3D</color>
+    <color name="md_navy_800">#002D6B</color>
+    <color name="md_navy_700">#003D8F</color>
+    <color name="md_navy_600">#0050B8</color>
+    <color name="md_navy_500">#0063E0</color>
+    <color name="md_navy_400">#3385F0</color>
+    <color name="md_navy_300">#66A8F5</color>
+    <color name="md_navy_100">#CCE0FB</color>
+
+    <!-- Accent Orange -->
+    <color name="md_orange_600">#E05C00</color>
+    <color name="md_orange_500">#F47E17</color>
+    <color name="md_orange_400">#FF9A3D</color>
+    <color name="md_orange_100">#FDE8CC</color>
+
+    <!-- Semantic -->
+    <color name="md_success">#00875A</color>
+    <color name="md_success_bg">#E3F5EE</color>
+    <color name="md_warning">#CF8B00</color>
+    <color name="md_warning_bg">#FFF8E0</color>
+    <color name="md_error">#C5001A</color>
+    <color name="md_error_bg">#FBEAEA</color>
+    <color name="md_info">#0063E0</color>
+    <color name="md_info_bg">#E5EEFF</color>
+
+    <!-- Neutral -->
+    <color name="md_white">#FFFFFF</color>
+    <color name="md_gray_50">#F8FAFC</color>
+    <color name="md_gray_100">#F0F4F8</color>
+    <color name="md_gray_200">#E2E8F0</color>
+    <color name="md_gray_300">#CBD5E0</color>
+    <color name="md_gray_400">#A0AEC0</color>
+    <color name="md_gray_500">#718096</color>
+    <color name="md_gray_700">#2D3748</color>
+    <color name="md_gray_900">#1A202C</color>
+
+    <!-- Theme Aliases -->
+    <color name="colorPrimary">@color/md_navy_800</color>
+    <color name="colorPrimaryDark">@color/md_navy_900</color>
+    <color name="colorPrimaryVariant">@color/md_navy_700</color>
+    <color name="colorSecondary">@color/md_orange_500</color>
+    <color name="colorSecondaryVariant">@color/md_orange_600</color>
+    <color name="colorOnPrimary">@color/md_white</color>
+    <color name="colorOnSecondary">@color/md_white</color>
+    <color name="colorBackground">@color/md_gray_50</color>
+    <color name="colorSurface">@color/md_white</color>
+    <color name="colorOnBackground">@color/md_gray_900</color>
+    <color name="colorOnSurface">@color/md_gray_900</color>
+    <color name="colorDivider">@color/md_gray_200</color>
 </resources>

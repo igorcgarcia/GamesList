@@ -1,11 +1,115 @@
 <resources>
-    <string name="app_name">DHGamesDF4</string>
-    <string name="campo_obrigatorio">%1$s is Required</string>
-    <string name="email_invalido">Invalid Email Format</string>
-    <string name="name">Name</string>
-    <string name="created_at">Created at</string>
-    <string name="description">Description</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="repeat_password">Repeat password</string>
+    <string name="app_name">Marketdata SFMC Demo</string>
+    <string name="app_tagline">Salesforce Marketing Cloud</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Início</string>
+    <string name="nav_identity">Identidade</string>
+    <string name="nav_push">Push</string>
+    <string name="nav_attributes">Atributos</string>
+    <string name="nav_analytics">Analytics</string>
+
+    <!-- Splash -->
+    <string name="splash_powered_by">Powered by</string>
+    <string name="splash_loading">Inicializando SDK…</string>
+
+    <!-- Home -->
+    <string name="home_title">Dashboard</string>
+    <string name="home_sdk_status">Status do SDK</string>
+    <string name="home_sdk_active">SDK Ativo</string>
+    <string name="home_sdk_demo_mode">Modo Demo — configure as credenciais SFMC</string>
+    <string name="home_contact_key_label">Contact Key</string>
+    <string name="home_contact_key_empty">Não configurado</string>
+    <string name="home_push_status_label">Push Notifications</string>
+    <string name="home_push_enabled">Habilitado</string>
+    <string name="home_push_disabled">Desabilitado</string>
+    <string name="home_fcm_token_label">Token FCM</string>
+    <string name="home_quick_actions">Ações Rápidas</string>
+    <string name="home_set_identity">Definir Identidade</string>
+    <string name="home_manage_push">Gerenciar Push</string>
+    <string name="home_track_event">Rastrear Evento</string>
+    <string name="home_app_version">v%1$s</string>
+
+    <!-- Identity -->
+    <string name="identity_title">Identificação do Contato</string>
+    <string name="identity_subtitle">Configure o contato no Salesforce Marketing Cloud</string>
+    <string name="identity_contact_key_label">Contact Key *</string>
+    <string name="identity_contact_key_hint">Ex: usuario@empresa.com.br</string>
+    <string name="identity_first_name_label">Primeiro Nome</string>
+    <string name="identity_first_name_hint">João</string>
+    <string name="identity_last_name_label">Sobrenome</string>
+    <string name="identity_last_name_hint">Silva</string>
+    <string name="identity_email_label">E-mail</string>
+    <string name="identity_email_hint">joao@empresa.com.br</string>
+    <string name="identity_phone_label">Telefone</string>
+    <string name="identity_phone_hint">+55 11 99999-9999</string>
+    <string name="identity_save_btn">Salvar Identidade</string>
+    <string name="identity_current_label">Valores Atuais no SFMC</string>
+    <string name="identity_success">Identidade salva com sucesso!</string>
+    <string name="identity_error">Erro ao salvar identidade</string>
+    <string name="identity_contact_key_required">Contact Key é obrigatório</string>
+
+    <!-- Push -->
+    <string name="push_title">Push Notifications</string>
+    <string name="push_subtitle">Gerencie notificações push via SFMC</string>
+    <string name="push_enabled_label">Push Habilitado</string>
+    <string name="push_permission_status">Permissão do Sistema</string>
+    <string name="push_permission_granted">Concedida</string>
+    <string name="push_permission_denied">Negada — toque para abrir configurações</string>
+    <string name="push_token_label">Token FCM (Device Token)</string>
+    <string name="push_token_copy">Copiar Token</string>
+    <string name="push_token_copied">Token copiado!</string>
+    <string name="push_token_empty">Token não disponível</string>
+    <string name="push_last_message_label">Última Notificação Recebida</string>
+    <string name="push_no_messages">Nenhuma notificação recebida nesta sessão</string>
+    <string name="push_request_permission">Solicitar Permissão</string>
+    <string name="push_enabled_success">Push notifications habilitado</string>
+    <string name="push_disabled_success">Push notifications desabilitado</string>
+
+    <!-- Attributes -->
+    <string name="attributes_title">Atributos e Tags</string>
+    <string name="attributes_subtitle">Perfil do contato no SFMC</string>
+    <string name="attributes_section_label">Atributos Personalizados</string>
+    <string name="attributes_key_hint">Nome do atributo (ex: plano)</string>
+    <string name="attributes_value_hint">Valor (ex: premium)</string>
+    <string name="attributes_add_btn">Adicionar</string>
+    <string name="attributes_tags_section">Tags</string>
+    <string name="attributes_tag_hint">Nome da tag (ex: cliente_vip)</string>
+    <string name="attributes_add_tag_btn">+ Tag</string>
+    <string name="attributes_empty">Nenhum atributo configurado</string>
+    <string name="attributes_tags_empty">Nenhuma tag configurada</string>
+    <string name="attributes_saved">Atributo salvo!</string>
+    <string name="attributes_removed">Atributo removido</string>
+    <string name="attributes_tag_added">Tag adicionada!</string>
+    <string name="attributes_tag_removed">Tag removida</string>
+    <string name="attributes_key_required">Nome do atributo obrigatório</string>
+    <string name="attributes_value_required">Valor obrigatório</string>
+    <string name="attributes_tag_required">Nome da tag obrigatório</string>
+
+    <!-- Analytics -->
+    <string name="analytics_title">Analytics e Eventos</string>
+    <string name="analytics_subtitle">Rastreamento de eventos no SFMC</string>
+    <string name="analytics_custom_event_section">Evento Customizado</string>
+    <string name="analytics_event_name_label">Nome do Evento *</string>
+    <string name="analytics_event_name_hint">Ex: product_view</string>
+    <string name="analytics_event_attr_label">Atributos do Evento (JSON)</string>
+    <string name="analytics_event_attr_hint">{\"produto\": \"SKU123\", \"preco\": \"299.90\"}</string>
+    <string name="analytics_track_event_btn">Rastrear Evento</string>
+    <string name="analytics_pageview_section">Page View</string>
+    <string name="analytics_page_url_label">URL da Página</string>
+    <string name="analytics_page_url_hint">https://marketdata.com.br/produtos</string>
+    <string name="analytics_page_title_label">Título da Página</string>
+    <string name="analytics_page_title_hint">Página de Produtos</string>
+    <string name="analytics_track_pageview_btn">Rastrear Page View</string>
+    <string name="analytics_log_section">Log da Sessão</string>
+    <string name="analytics_log_empty">Nenhum evento rastreado nesta sessão</string>
+    <string name="analytics_clear_log">Limpar Log</string>
+    <string name="analytics_event_tracked">Evento \"%1$s\" rastreado!</string>
+    <string name="analytics_pageview_tracked">Page View rastreada!</string>
+    <string name="analytics_event_name_required">Nome do evento obrigatório</string>
+    <string name="analytics_invalid_json">JSON inválido</string>
+
+    <!-- Generic -->
+    <string name="error_sdk_not_ready">SDK não inicializado. Verifique as credenciais SFMC.</string>
+    <string name="demo_mode_warning">Configure as credenciais reais do SFMC em BuildConfig para conectar ao servidor.</string>
 </resources>
