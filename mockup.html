@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketdata SFMC Demo — Emulador</title>
+<style>
+  :root {
+    --navy-900: #001A3D;
+    --navy-800: #002D6B;
+    --navy-700: #003D8F;
+    --navy-600: #0050B8;
+    --navy-500: #0063E0;
+    --navy-400: #3385F0;
+    --navy-300: #66A8F5;
+    --navy-100: #CCE0FB;
+    --orange-600: #E05C00;
+    --orange-500: #F47E17;
+    --orange-400: #FF9A3D;
+    --orange-100: #FDE8CC;
+    --success: #00875A;
+    --success-bg: #E3F5EE;
+    --warning: #CF8B00;
+    --warning-bg: #FFF8E0;
+    --error: #C5001A;
+    --error-bg: #FBEAEA;
+    --info-bg: #E5EEFF;
+    --gray-50: #F8FAFC;
+    --gray-100: #F0F4F8;
+    --gray-200: #E2E8F0;
+    --gray-300: #CBD5E0;
+    --gray-400: #A0AEC0;
+    --gray-500: #718096;
+    --gray-700: #2D3748;
+    --gray-900: #1A202C;
+    --white: #FFFFFF;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #1a1a2e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+
+  .scene {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .scene-label {
+    color: #aaa;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* Phone frame */
+  .phone {
+    width: 360px;
+    height: 720px;
+    background: #000;
+    border-radius: 44px;
+    padding: 10px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px #333;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .phone-notch {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 22px;
+    background: #000;
+    border-radius: 0 0 14px 14px;
+    z-index: 10;
+  }
+
+  .phone-screen {
+    width: 100%;
+    height: 100%;
+    background: var(--gray-50);
+    border-radius: 36px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .status-bar {
+    height: 30px;
+    background: var(--navy-900);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    font-size: 10px;
+    color: white;
+    flex-shrink: 0;
+    padding-top: 8px;
+  }
+
+  .content-area {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+  }
+  .content-area::-webkit-scrollbar { display: none; }
+
+  /* ─── Header ─────────────────────────────── */
+  .header {
+    background: linear-gradient(135deg, var(--navy-900), var(--navy-700));
+    padding: 16px;
+    flex-shrink: 0;
+  }
+  .header-title { color: white; font-size: 18px; font-weight: 700; }
+  .header-sub { color: var(--navy-300); font-size: 11px; margin-top: 2px; }
+  .status-chip {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .chip-active { background: var(--success-bg); color: var(--success); }
+  .chip-demo { background: var(--warning-bg); color: var(--warning); }
+  .chip-inactive { background: var(--gray-200); color: var(--gray-500); }
+
+  /* ─── Cards ──────────────────────────────── */
+  .card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    margin-bottom: 10px;
+  }
+  .card-blue { background: var(--info-bg); }
+  .card-label { font-size: 10px; color: var(--gray-400); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 4px; }
+  .card-value { font-size: 13px; color: var(--gray-900); font-weight: 700; }
+  .card-value.mono { font-family: monospace; font-size: 10px; color: var(--navy-700); line-height: 1.5; }
+  .card-title { font-size: 13px; font-weight: 700; color: var(--navy-800); margin-bottom: 10px; }
+
+  .row { display: flex; gap: 8px; margin-bottom: 10px; }
+  .flex-1 { flex: 1; }
+
+  /* ─── Buttons ────────────────────────────── */
+  .btn {
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    transition: opacity 0.15s;
+  }
+  .btn:active { opacity: 0.8; }
+  .btn-primary { background: var(--navy-800); color: white; }
+  .btn-accent { background: var(--orange-500); color: white; }
+  .btn-outline { background: transparent; color: var(--navy-800); border: 1.5px solid var(--navy-800); }
+  .btn-text { background: transparent; color: var(--navy-600); font-size: 11px; border: none; padding: 6px 12px; }
+
+  /* ─── Form ───────────────────────────────── */
+  .form-group { margin-bottom: 10px; }
+  .form-label { font-size: 10px; color: var(--gray-500); margin-bottom: 4px; display: block; }
+  .form-input {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid var(--gray-300);
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--gray-900);
+    background: white;
+    outline: none;
+  }
+  .form-input:focus { border-color: var(--navy-400); }
+  .form-row { display: flex; gap: 8px; }
+  .form-row .form-group { flex: 1; }
+  textarea.form-input { min-height: 56px; resize: none; font-family: monospace; font-size: 11px; }
+
+  /* ─── Switch ─────────────────────────────── */
+  .switch-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 0;
+  }
+  .switch-label { font-size: 13px; font-weight: 700; color: var(--gray-900); }
+  .switch-sub { font-size: 11px; color: var(--gray-500); margin-top: 2px; }
+  .toggle {
+    width: 42px; height: 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .toggle::after {
+    content: '';
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 18px; height: 18px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .toggle.on { background: var(--navy-800); }
+  .toggle.on::after { transform: translateX(18px); }
+  .toggle.off { background: var(--gray-300); }
+
+  /* ─── Divider ────────────────────────────── */
+  .divider { height: 1px; background: var(--gray-200); margin: 10px 0; }
+
+  /* ─── Chip tags ──────────────────────────── */
+  .chip-group { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .tag-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: var(--navy-100);
+    color: var(--navy-800);
+    border-radius: 16px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .tag-chip .close { cursor: pointer; color: var(--navy-600); font-size: 14px; line-height: 1; }
+
+  /* ─── Attr list ──────────────────────────── */
+  .attr-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+    gap: 6px;
+  }
+  .attr-key { font-size: 12px; font-weight: 700; color: var(--navy-700); font-family: monospace; min-width: 80px; }
+  .attr-eq { font-size: 11px; color: var(--gray-400); }
+  .attr-val { font-size: 12px; color: var(--gray-700); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .attr-del { font-size: 16px; color: var(--gray-400); cursor: pointer; }
+
+  /* ─── Log ────────────────────────────────── */
+  .log-box {
+    background: var(--gray-50);
+    border-radius: 8px;
+    padding: 10px;
+    font-family: monospace;
+    font-size: 10px;
+    color: var(--gray-700);
+    line-height: 1.7;
+    min-height: 60px;
+  }
+
+  /* ─── Bottom Nav ─────────────────────────── */
+  .bottom-nav {
+    display: flex;
+    background: white;
+    border-top: 1px solid var(--gray-200);
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
+    flex-shrink: 0;
+  }
+  .nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 0 6px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    border: none;
+    background: transparent;
+    gap: 2px;
+  }
+  .nav-icon { font-size: 18px; line-height: 1; }
+  .nav-label { font-size: 9px; font-weight: 600; }
+  .nav-item.active .nav-label { color: var(--navy-800); }
+  .nav-item.active .nav-icon { filter: none; opacity: 1; }
+  .nav-item:not(.active) .nav-label { color: var(--gray-400); }
+  .nav-item:not(.active) .nav-icon { opacity: 0.4; }
+
+  /* ─── Demo Banner ────────────────────────── */
+  .demo-banner {
+    background: var(--warning-bg);
+    padding: 8px 12px;
+    font-size: 10px;
+    color: var(--warning);
+    line-height: 1.4;
+  }
+
+  /* ─── Splash ─────────────────────────────── */
+  .splash-screen {
+    background: linear-gradient(135deg, var(--navy-900), var(--navy-700));
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+  .splash-logo {
+    width: 72px; height: 72px;
+    background: var(--orange-500);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 20px;
+  }
+  .splash-name { font-size: 26px; font-weight: 800; color: white; }
+  .splash-tag { font-size: 13px; color: var(--navy-300); margin-top: 4px; }
+  .splash-bottom { position: absolute; bottom: 50px; text-align: center; }
+  .splash-spinner { font-size: 20px; margin-bottom: 8px; animation: spin 1s linear infinite; display: inline-block; }
+  @keyframes spin { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+  .splash-status { font-size: 11px; color: var(--navy-400); }
+  .splash-powered { font-size: 10px; color: var(--navy-500); margin-top: 12px; }
+
+  /* ─── Section label ──────────────────────── */
+  .section-label { font-size: 11px; font-weight: 700; color: var(--gray-700); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; margin-top: 4px; }
+
+  .padding { padding: 12px; }
+
+  /* ─── Permission badge ───────────────────── */
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; }
+  .badge-success { background: var(--success-bg); color: var(--success); }
+  .badge-error { background: var(--error-bg); color: var(--error); }
+
+  /* Screen tabs (selector above phone) */
+  .screen-tabs {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .tab-btn {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1.5px solid #444;
+    background: transparent;
+    color: #aaa;
+    transition: all 0.15s;
+  }
+  .tab-btn.active {
+    background: var(--navy-700);
+    color: white;
+    border-color: var(--navy-700);
+  }
+
+  .screen { display: none; flex-direction: column; height: 100%; }
+  .screen.visible { display: flex; }
+</style>
+</head>
+<body>
+
+<div class="scene">
+  <div class="screen-tabs">
+    <button class="tab-btn active" onclick="showScreen('splash')">Splash</button>
+    <button class="tab-btn" onclick="showScreen('home')">Dashboard</button>
+    <button class="tab-btn" onclick="showScreen('identity')">Identidade</button>
+    <button class="tab-btn" onclick="showScreen('push')">Push</button>
+    <button class="tab-btn" onclick="showScreen('attributes')">Atributos</button>
+    <button class="tab-btn" onclick="showScreen('analytics')">Analytics</button>
+  </div>
+
+  <div class="phone">
+    <div class="phone-notch"></div>
+    <div class="phone-screen" id="phoneScreen">
+
+      <!-- ══════════ SPLASH ══════════ -->
+      <div class="screen visible" id="screen-splash">
+        <div class="status-bar">
+          <span>9:41</span>
+          <span>●●● 5G ▓▓</span>
+        </div>
+        <div class="splash-screen">
+          <div class="splash-logo">MD</div>
+          <div class="splash-name">Marketdata</div>
+          <div class="splash-tag">Marketing Intelligence</div>
+          <div class="splash-bottom">
+            <div><span class="splash-spinner">⟳</span></div>
+            <div class="splash-status">Inicializando SDK…</div>
+            <div class="splash-powered">Powered by Salesforce Marketing Cloud</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ HOME ══════════ -->
+      <div class="screen" id="screen-home">
+        <div class="status-bar">
+          <span>9:41</span>
+          <span>●●● 5G ▓▓</span>
+        </div>
+        <div class="content-area">
+          <div class="header">
+            <div class="header-title">Marketdata</div>
+            <div class="header-sub">Salesforce Marketing Cloud</div>
+            <span class="status-chip chip-demo">SDK Demo Mode</span>
+          </div>
+          <div class="demo-banner">
+            Configure as credenciais SFMC reais em BuildConfig para conectar ao servidor.
+          </div>
+          <div class="padding">
+            <div class="card">
+              <div class="card-label">Contact Key</div>
+              <div class="card-value mono">igor.garcia@marketdata.com.br</div>
+            </div>
+            <div class="row">
+              <div class="card flex-1" style="margin-bottom:0">
+                <div class="card-label">Push Notifications</div>
+                <div class="card-value" style="color:var(--success)">Habilitado</div>
+              </div>
+              <div class="card flex-1" style="margin-bottom:0">
+                <div class="card-label">Notificações</div>
+                <div class="card-value">3 recebidas</div>
+              </div>
+            </div>
+            <div class="card card-blue" style="margin-top:10px">
+              <div class="card-label" style="color:var(--navy-600)">Token FCM</div>
+              <div class="card-value mono">dGhpcyBpcyBhIHNhbXBsZSBGQ00gdG9rZW4gZm9yIGRlbW8gcHVycG9zZXM6ZXhhbXBsZQ==…</div>
+            </div>
+            <div class="section-label">Ações Rápidas</div>
+            <div class="row" style="margin-bottom:0">
+              <button class="btn btn-primary flex-1" onclick="showScreen('identity')">Identidade</button>
+              <button class="btn btn-accent flex-1" onclick="showScreen('push')">Push</button>
+              <button class="btn btn-outline flex-1" onclick="showScreen('analytics')">Evento</button>
+            </div>
+            <div style="text-align:center; margin-top:18px; font-size:10px; color:var(--gray-400)">v1.0.0</div>
+          </div>
+        </div>
+        <div class="bottom-nav" id="nav-home">
+          <button class="nav-item active" onclick="showScreen('home')"><span class="nav-icon">🏠</span><span class="nav-label">Início</span></button>
+          <button class="nav-item" onclick="showScreen('identity')"><span class="nav-icon">👤</span><span class="nav-label">Identidade</span></button>
+          <button class="nav-item" onclick="showScreen('push')"><span class="nav-icon">🔔</span><span class="nav-label">Push</span></button>
+          <button class="nav-item" onclick="showScreen('attributes')"><span class="nav-icon">⚙️</span><span class="nav-label">Atributos</span></button>
+          <button class="nav-item" onclick="showScreen('analytics')"><span class="nav-icon">📊</span><span class="nav-label">Analytics</span></button>
+        </div>
+      </div>
+
+      <!-- ══════════ IDENTITY ══════════ -->
+      <div class="screen" id="screen-identity">
+        <div class="status-bar">
+          <span>9:41</span>
+          <span>●●● 5G ▓▓</span>
+        </div>
+        <div class="content-area">
+          <div class="header">
+            <div class="header-title">Identificação do Contato</div>
+            <div class="header-sub">Configure o contato no Salesforce Marketing Cloud</div>
+          </div>
+          <div class="padding">
+            <div class="form-group">
+              <label class="form-label">Contact Key *</label>
+              <input class="form-input" type="text" value="igor.garcia@marketdata.com.br" />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Primeiro Nome</label>
+                <input class="form-input" type="text" value="Igor" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Sobrenome</label>
+                <input class="form-input" type="text" value="Garcia" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">E-mail</label>
+              <input class="form-input" type="text" value="igor.garcia@marketdata.com.br" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Telefone</label>
+              <input class="form-input" type="text" value="+55 11 99999-8888" />
+            </div>
+            <button class="btn btn-primary" style="margin-bottom:8px" onclick="showSnack('✅ Identidade salva com sucesso!')">Salvar Identidade</button>
+            <div class="card card-blue" style="margin-top:10px">
+              <div class="card-title" style="color:var(--navy-700);font-size:11px">Valores Atuais no SFMC</div>
+              <div class="card-value mono">contactKey : igor.garcia@marketdata.com.br<br>firstName  : Igor<br>lastName   : Garcia<br>email      : igor.garcia@marketdata.com.br<br>phone      : +55 11 99999-8888</div>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-nav">
+          <button class="nav-item" onclick="showScreen('home')"><span class="nav-icon">🏠</span><span class="nav-label">Início</span></button>
+          <button class="nav-item active" onclick="showScreen('identity')"><span class="nav-icon">👤</span><span class="nav-label">Identidade</span></button>
+          <button class="nav-item" onclick="showScreen('push')"><span class="nav-icon">🔔</span><span class="nav-label">Push</span></button>
+          <button class="nav-item" onclick="showScreen('attributes')"><span class="nav-icon">⚙️</span><span class="nav-label">Atributos</span></button>
+          <button class="nav-item" onclick="showScreen('analytics')"><span class="nav-icon">📊</span><span class="nav-label">Analytics</span></button>
+        </div>
+      </div>
+
+      <!-- ══════════ PUSH ══════════ -->
+      <div class="screen" id="screen-push">
+        <div class="status-bar">
+          <span>9:41</span>
+          <span>●●● 5G ▓▓</span>
+        </div>
+        <div class="content-area">
+          <div class="header">
+            <div class="header-title">Push Notifications</div>
+            <div class="header-sub">Gerencie notificações push via SFMC</div>
+          </div>
+          <div class="padding">
+            <div class="card">
+              <div class="switch-row">
+                <div>
+                  <div class="switch-label">Push Habilitado</div>
+                  <div class="switch-sub" id="pushStatusText">Push notifications habilitado</div>
+                </div>
+                <div class="toggle on" id="pushToggle" onclick="togglePush()"></div>
+              </div>
+              <div class="divider"></div>
+              <div class="switch-row">
+                <span style="font-size:12px;color:var(--gray-700)">Permissão do Sistema</span>
+                <span class="badge badge-success" id="permBadge">Concedida</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                <span style="font-size:12px;font-weight:700;color:var(--gray-700)">Token FCM</span>
+                <button class="btn btn-text" style="width:auto" onclick="showSnack('📋 Token copiado!')">Copiar</button>
+              </div>
+              <div class="card-value mono" style="background:var(--gray-50);padding:8px;border-radius:6px;word-break:break-all;">dGhpcyBpcyBhIHNhbXBsZSBGQ00gdG9rZW4gZm9yIGRlbW8gcHVycG9zZXM6ZXhhbXBsZXRva2VudmFsdWU=</div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Última Notificação Recebida</div>
+              <div class="card-value mono" style="color:var(--gray-600)">title: Oferta Especial Marketdata<br>body : Desconto de 30% hoje!<br>data : {campaign: "black_friday_2024"}</div>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-nav">
+          <button class="nav-item" onclick="showScreen('home')"><span class="nav-icon">🏠</span><span class="nav-label">Início</span></button>
+          <button class="nav-item" onclick="showScreen('identity')"><span class="nav-icon">👤</span><span class="nav-label">Identidade</span></button>
+          <button class="nav-item active" onclick="showScreen('push')"><span class="nav-icon">🔔</span><span class="nav-label">Push</span></button>
+          <button class="nav-item" onclick="showScreen('attributes')"><span class="nav-icon">⚙️</span><span class="nav-label">Atributos</span></button>
+          <button class="nav-item" onclick="showScreen('analytics')"><span class="nav-icon">📊</span><span class="nav-label">Analytics</span></button>
+        </div>
+      </div>
+
+      <!-- ══════════ ATTRIBUTES ══════════ -->
+      <div class="screen" id="screen-attributes">
+        <div class="status-bar">
+          <span>9:41</span>
+          <span>●●● 5G ▓▓</span>
+        </div>
+        <div class="content-area">
+          <div class="header">
+            <div class="header-title">Atributos e Tags</div>
+            <div class="header-sub">Perfil do contato no SFMC</div>
+          </div>
+          <div class="padding">
+            <div class="section-label">Atributos Personalizados</div>
+            <div class="row" style="align-items:flex-end;margin-bottom:6px">
+              <div class="form-group flex-1" style="margin-bottom:0;flex:2">
+                <input class="form-input" id="newAttrKey" placeholder="Nome do atributo" />
+              </div>
+              <div class="form-group flex-1" style="margin-bottom:0;flex:2">
+                <input class="form-input" id="newAttrVal" placeholder="Valor" />
+              </div>
+              <button class="btn btn-primary" style="width:auto;padding:9px 12px;white-space:nowrap" onclick="addAttr()">+ Add</button>
+            </div>
+            <div class="card" style="padding:8px 14px">
+              <div id="attrList">
+                <div class="attr-row"><span class="attr-key">plano</span><span class="attr-eq">=</span><span class="attr-val">premium</span><span class="attr-del" onclick="delAttr(this)">🗑</span></div>
+                <div class="attr-row"><span class="attr-key">segmento</span><span class="attr-eq">=</span><span class="attr-val">varejo_b2b</span><span class="attr-del" onclick="delAttr(this)">🗑</span></div>
+                <div class="attr-row"><span class="attr-key">cidade</span><span class="attr-eq">=</span><span class="attr-val">São Paulo</span><span class="attr-del" onclick="delAttr(this)">🗑</span></div>
+              </div>
+            </div>
+
+            <div class="section-label" style="margin-top:12px">Tags</div>
+            <div class="row" style="align-items:flex-end;margin-bottom:8px">
+              <div class="form-group flex-1" style="margin-bottom:0">
+                <input class="form-input" id="newTag" placeholder="nome_da_tag" />
+              </div>
+              <button class="btn btn-accent" style="width:auto;padding:9px 12px;white-space:nowrap" onclick="addTag()">+ Tag</button>
+            </div>
+            <div class="chip-group" id="tagList">
+              <div class="tag-chip">cliente_vip <span class="close" onclick="removeTag(this)">×</span></div>
+              <div class="tag-chip">black_friday <span class="close" onclick="removeTag(this)">×</span></div>
+              <div class="tag-chip">newsletter <span class="close" onclick="removeTag(this)">×</span></div>
+              <div class="tag-chip">mobile_user <span class="close" onclick="removeTag(this)">×</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-nav">
+          <button class="nav-item" onclick="showScreen('home')"><span class="nav-icon">🏠</span><span class="nav-label">Início</span></button>
+          <button class="nav-item" onclick="showScreen('identity')"><span class="nav-icon">👤</span><span class="nav-label">Identidade</span></button>
+          <button class="nav-item" onclick="showScreen('push')"><span class="nav-icon">🔔</span><span class="nav-label">Push</span></button>
+          <button class="nav-item active" onclick="showScreen('attributes')"><span class="nav-icon">⚙️</span><span class="nav-label">Atributos</span></button>
+          <button class="nav-item" onclick="showScreen('analytics')"><span class="nav-icon">📊</span><span class="nav-label">Analytics</span></button>
+        </div>
+      </div>
+
+      <!-- ══════════ ANALYTICS ══════════ -->
+      <div class="screen" id="screen-analytics">
+        <div class="status-bar">
+          <span>9:41</span>
+          <span>●●● 5G ▓▓</span>
+        </div>
+        <div class="content-area">
+          <div class="header">
+            <div class="header-title">Analytics e Eventos</div>
+            <div class="header-sub">Rastreamento de eventos no SFMC</div>
+          </div>
+          <div class="padding">
+            <div class="card">
+              <div class="card-title">Evento Customizado</div>
+              <div class="form-group">
+                <label class="form-label">Nome do Evento *</label>
+                <input class="form-input" id="evtName" placeholder="Ex: product_view" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Atributos (JSON)</label>
+                <textarea class="form-input" id="evtAttrs" placeholder='{"produto": "SKU123", "preco": "299.90"}'></textarea>
+              </div>
+              <button class="btn btn-primary" onclick="trackEvent()">Rastrear Evento</button>
+            </div>
+
+            <div class="card" style="margin-top:10px">
+              <div class="card-title">Page View</div>
+              <div class="form-group">
+                <label class="form-label">URL</label>
+                <input class="form-input" id="pvUrl" placeholder="https://marketdata.com.br/produtos" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Título</label>
+                <input class="form-input" id="pvTitle" placeholder="Página de Produtos" />
+              </div>
+              <button class="btn btn-accent" onclick="trackPV()">Rastrear Page View</button>
+            </div>
+
+            <div class="card" style="margin-top:10px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                <span style="font-size:12px;font-weight:700;color:var(--navy-800)">Log da Sessão</span>
+                <button class="btn btn-text" style="width:auto" onclick="clearLog()">Limpar</button>
+              </div>
+              <div class="log-box" id="eventLog">Nenhum evento rastreado nesta sessão</div>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-nav">
+          <button class="nav-item" onclick="showScreen('home')"><span class="nav-icon">🏠</span><span class="nav-label">Início</span></button>
+          <button class="nav-item" onclick="showScreen('identity')"><span class="nav-icon">👤</span><span class="nav-label">Identidade</span></button>
+          <button class="nav-item" onclick="showScreen('push')"><span class="nav-icon">🔔</span><span class="nav-label">Push</span></button>
+          <button class="nav-item" onclick="showScreen('attributes')"><span class="nav-icon">⚙️</span><span class="nav-label">Atributos</span></button>
+          <button class="nav-item active" onclick="showScreen('analytics')"><span class="nav-icon">📊</span><span class="nav-label">Analytics</span></button>
+        </div>
+      </div>
+
+    </div><!-- /phone-screen -->
+  </div><!-- /phone -->
+  <div class="scene-label">Clique nos botões para navegar entre telas</div>
+</div><!-- /scene -->
+
+<!-- Snackbar -->
+<div id="snack" style="position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#2D3748;color:white;padding:10px 20px;border-radius:24px;font-size:13px;opacity:0;transition:opacity 0.3s;z-index:999;white-space:nowrap;pointer-events:none;"></div>
+
+<script>
+let pushOn = true;
+const logEntries = [];
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('visible'));
+  document.getElementById('screen-' + id).classList.add('visible');
+  document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+    const screens = ['splash','home','identity','push','attributes','analytics'];
+    btn.classList.toggle('active', screens[i] === id);
+  });
+}
+
+function showSnack(msg) {
+  const snack = document.getElementById('snack');
+  snack.textContent = msg;
+  snack.style.opacity = '1';
+  setTimeout(() => snack.style.opacity = '0', 2200);
+}
+
+function togglePush() {
+  pushOn = !pushOn;
+  const tog = document.getElementById('pushToggle');
+  const txt = document.getElementById('pushStatusText');
+  tog.className = 'toggle ' + (pushOn ? 'on' : 'off');
+  txt.textContent = pushOn ? 'Push notifications habilitado' : 'Push notifications desabilitado';
+  showSnack(pushOn ? '🔔 Push habilitado' : '🔕 Push desabilitado');
+}
+
+function addAttr() {
+  const key = document.getElementById('newAttrKey').value.trim();
+  const val = document.getElementById('newAttrVal').value.trim();
+  if (!key || !val) { showSnack('⚠️ Preencha chave e valor'); return; }
+  const list = document.getElementById('attrList');
+  const row = document.createElement('div');
+  row.className = 'attr-row';
+  row.innerHTML = `<span class="attr-key">${key}</span><span class="attr-eq">=</span><span class="attr-val">${val}</span><span class="attr-del" onclick="delAttr(this)">🗑</span>`;
+  list.appendChild(row);
+  document.getElementById('newAttrKey').value = '';
+  document.getElementById('newAttrVal').value = '';
+  showSnack('✅ Atributo salvo!');
+}
+
+function delAttr(btn) {
+  btn.parentElement.remove();
+  showSnack('🗑 Atributo removido');
+}
+
+function addTag() {
+  const val = document.getElementById('newTag').value.trim();
+  if (!val) { showSnack('⚠️ Digite um nome de tag'); return; }
+  const list = document.getElementById('tagList');
+  const chip = document.createElement('div');
+  chip.className = 'tag-chip';
+  chip.innerHTML = `${val} <span class="close" onclick="removeTag(this)">×</span>`;
+  list.appendChild(chip);
+  document.getElementById('newTag').value = '';
+  showSnack('🏷️ Tag adicionada!');
+}
+
+function removeTag(btn) {
+  btn.parentElement.remove();
+  showSnack('🗑 Tag removida');
+}
+
+function now() {
+  return new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+
+function appendLog(line) {
+  const log = document.getElementById('eventLog');
+  if (log.textContent === 'Nenhum evento rastreado nesta sessão') log.textContent = '';
+  log.textContent = line + '\n' + log.textContent;
+}
+
+function trackEvent() {
+  const name = document.getElementById('evtName').value.trim();
+  const attrs = document.getElementById('evtAttrs').value.trim();
+  if (!name) { showSnack('⚠️ Nome do evento obrigatório'); return; }
+  try {
+    if (attrs) JSON.parse(attrs);
+  } catch(e) { showSnack('⚠️ JSON inválido'); return; }
+  appendLog(`[${now()}] 📊 ${name}${attrs ? '\n   ↳ ' + attrs : ''}`);
+  showSnack(`✅ Evento "${name}" rastreado!`);
+  document.getElementById('evtName').value = '';
+  document.getElementById('evtAttrs').value = '';
+}
+
+function trackPV() {
+  const url = document.getElementById('pvUrl').value.trim() || 'https://marketdata.com.br';
+  const title = document.getElementById('pvTitle').value.trim() || 'Marketdata';
+  appendLog(`[${now()}] 🌐 ${title}\n   ↳ ${url}`);
+  showSnack('✅ Page View rastreada!');
+  document.getElementById('pvUrl').value = '';
+  document.getElementById('pvTitle').value = '';
+}
+
+function clearLog() {
+  document.getElementById('eventLog').textContent = 'Nenhum evento rastreado nesta sessão';
+}
+</script>
+</body>
+</html>
