@@ -3,12 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Marketdata SFMC Demo</title>
+<title>Marketdata SFMC Demo — Todas as Telas</title>
 <style>
-/* ═══════════════════════════════════════════════
-   RESET & VARIABLES
-═══════════════════════════════════════════════ */
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --n900:#001A3D;--n800:#002D6B;--n700:#003D8F;--n600:#0050B8;
   --n500:#0063E0;--n400:#3385F0;--n300:#66A8F5;--n200:#99C4FA;--n100:#CCE0FB;
@@ -19,939 +16,682 @@
   --infobg:#E5EEFF;
   --g50:#F8FAFC;--g100:#F0F4F8;--g200:#E2E8F0;--g300:#CBD5E0;
   --g400:#A0AEC0;--g500:#718096;--g700:#2D3748;--g900:#1A202C;
-  --w:#FFFFFF;
-  --radius:12px;
+  --w:#FFFFFF;--radius:12px;
 }
-
-/* ═══════════════════════════════════════════════
-   PAGE
-═══════════════════════════════════════════════ */
 body{
   background:linear-gradient(160deg,#0d1b35 0%,#111827 60%,#1a1f2e 100%);
-  min-height:100vh;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  padding:20px 10px 30px;gap:16px;
+  min-height:100vh;padding:24px 20px 40px;
   font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
 }
-
-/* ═══════════════════════════════════════════════
-   QUICK-NAV TABS (above phone)
-═══════════════════════════════════════════════ */
-.qtabs{
-  display:flex;flex-wrap:wrap;gap:5px;justify-content:center;
-  max-width:400px;
+h1{
+  text-align:center;color:#fff;font-size:20px;font-weight:800;
+  letter-spacing:-.01em;margin-bottom:4px;
 }
-.qt{
-  padding:5px 13px;border-radius:18px;border:1.5px solid #334;
-  background:transparent;color:#aaa;font-size:10px;font-weight:600;
-  cursor:pointer;transition:all .2s;letter-spacing:.03em;
-}
-.qt:hover{border-color:#4a6;color:#6df;}
-.qt.qon{background:var(--n700);color:#fff;border-color:var(--n700);}
+.sub{text-align:center;color:rgba(255,255,255,.35);font-size:12px;margin-bottom:28px;letter-spacing:.04em;}
 
-/* ═══════════════════════════════════════════════
-   PHONE FRAME
-═══════════════════════════════════════════════ */
+/* ── Gallery layout ───────────────────────────── */
+.gallery{
+  display:flex;flex-wrap:wrap;gap:28px;
+  justify-content:center;align-items:flex-start;
+}
+.screen-wrap{
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+}
+.screen-label{
+  color:rgba(255,255,255,.5);font-size:10px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+}
+
+/* ── Phone frame ──────────────────────────────── */
 .phone{
-  width:348px;height:700px;
+  width:240px;
   background:linear-gradient(180deg,#1a1a1a,#0d0d0d);
-  border-radius:46px;padding:10px;
-  box-shadow:
-    0 0 0 1px #2a2a2a,
-    0 30px 80px rgba(0,0,0,.75),
-    inset 0 1px 0 rgba(255,255,255,.06);
+  border-radius:36px;padding:8px;
+  box-shadow:0 0 0 1px #2a2a2a,0 20px 60px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.06);
   position:relative;flex-shrink:0;
 }
-/* Side buttons */
 .phone::before{
-  content:'';position:absolute;left:-3px;top:120px;
-  width:3px;height:60px;background:#222;border-radius:3px 0 0 3px;
-  box-shadow:0 72px 0 #222,0 -36px 0 #222;
+  content:'';position:absolute;left:-2px;top:90px;
+  width:2px;height:44px;background:#222;border-radius:3px 0 0 3px;
+  box-shadow:0 54px 0 #222,0 -28px 0 #222;
 }
 .phone::after{
-  content:'';position:absolute;right:-3px;top:140px;
-  width:3px;height:80px;background:#222;border-radius:0 3px 3px 0;
+  content:'';position:absolute;right:-2px;top:104px;
+  width:2px;height:60px;background:#222;border-radius:0 3px 3px 0;
 }
 .notch{
-  position:absolute;top:10px;left:50%;transform:translateX(-50%);
-  width:96px;height:22px;background:#0d0d0d;
-  border-radius:0 0 13px 13px;z-index:30;
-  box-shadow:inset 0 -2px 4px rgba(0,0,0,.4);
+  position:absolute;top:8px;left:50%;transform:translateX(-50%);
+  width:68px;height:16px;background:#0d0d0d;
+  border-radius:0 0 10px 10px;z-index:30;
 }
-/* Front camera */
 .notch::after{
-  content:'';position:absolute;top:5px;left:50%;transform:translateX(-50%);
-  width:10px;height:10px;background:#1a1a1a;border-radius:50%;
-  border:1.5px solid #222;
+  content:'';position:absolute;top:4px;left:50%;transform:translateX(-50%);
+  width:7px;height:7px;background:#1a1a1a;border-radius:50%;border:1px solid #222;
 }
 .swrap{
-  width:100%;height:100%;border-radius:37px;overflow:hidden;
-  position:relative;background:var(--g50);
+  width:100%;border-radius:29px;overflow:hidden;background:var(--g50);
 }
 
-/* ═══════════════════════════════════════════════
-   SCREENS (absolutely stacked)
-═══════════════════════════════════════════════ */
-.scr{
-  position:absolute;inset:0;display:flex;flex-direction:column;
-  opacity:0;pointer-events:none;
-  transition:opacity .28s ease;background:var(--g50);
-}
-.scr.on{opacity:1;pointer-events:all;}
-
-/* ═══════════════════════════════════════════════
-   COMMON UI PARTS
-═══════════════════════════════════════════════ */
-/* Status bar */
+/* ── Status bar ───────────────────────────────── */
 .sb{
-  height:30px;background:var(--n900);display:flex;align-items:flex-end;
-  justify-content:space-between;padding:0 16px 6px;
-  font-size:9px;color:rgba(255,255,255,.9);flex-shrink:0;letter-spacing:.02em;
+  height:24px;background:var(--n900);display:flex;align-items:flex-end;
+  justify-content:space-between;padding:0 12px 4px;
+  font-size:7.5px;color:rgba(255,255,255,.9);letter-spacing:.02em;flex-shrink:0;
 }
-.sb .time{font-weight:700;font-size:10px;}
-.sb .icons{display:flex;gap:3px;align-items:center;}
+.sb .time{font-weight:700;font-size:8px;}
+.sb .icons{display:flex;gap:2px;align-items:center;}
 
-/* Header */
+/* ── Header ───────────────────────────────────── */
 .hdr{
   background:linear-gradient(145deg,var(--n900) 0%,var(--n700) 100%);
-  padding:14px 16px;flex-shrink:0;
-  border-bottom:1px solid rgba(255,255,255,.05);
+  padding:10px 12px;flex-shrink:0;
 }
-.hdr-title{color:#fff;font-size:17px;font-weight:800;letter-spacing:-.01em;}
-.hdr-sub{color:var(--n300);font-size:10px;margin-top:2px;letter-spacing:.02em;}
+.hdr-title{color:#fff;font-size:13px;font-weight:800;letter-spacing:-.01em;}
+.hdr-sub{color:var(--n300);font-size:8px;margin-top:2px;letter-spacing:.02em;}
 .hdr-chip{
-  display:inline-flex;align-items:center;gap:4px;
-  margin-top:8px;padding:3px 10px;border-radius:20px;
-  font-size:9.5px;font-weight:700;letter-spacing:.02em;
+  display:inline-flex;align-items:center;gap:3px;
+  margin-top:5px;padding:2px 8px;border-radius:20px;
+  font-size:7.5px;font-weight:700;
 }
 .c-ok{background:var(--okbg);color:var(--ok);}
 .c-demo{background:var(--warnbg);color:var(--warn);}
-.c-err{background:var(--errbg);color:var(--err);}
 .c-info{background:var(--infobg);color:var(--n600);}
-.dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+.dot{width:5px;height:5px;border-radius:50%;background:currentColor;}
 
-/* Scrollable body */
-.body{flex:1;overflow-y:auto;overflow-x:hidden;}
+/* ── Scrollable body ──────────────────────────── */
+.body{overflow-y:auto;overflow-x:hidden;background:var(--g50);}
 .body::-webkit-scrollbar{display:none;}
-.body{scrollbar-width:none;}
-.pad{padding:12px;}
+.pad{padding:9px;}
 
-/* Cards */
+/* ── Cards ────────────────────────────────────── */
 .card{
-  background:var(--w);border-radius:var(--radius);padding:13px;
-  box-shadow:0 1px 4px rgba(0,0,0,.07),0 0 0 1px rgba(0,0,0,.04);
-  margin-bottom:10px;
+  background:var(--w);border-radius:9px;padding:9px;
+  box-shadow:0 1px 3px rgba(0,0,0,.07),0 0 0 1px rgba(0,0,0,.04);
+  margin-bottom:7px;
 }
 .card-blue{background:var(--infobg);box-shadow:none;}
-.card-green{background:var(--okbg);box-shadow:none;}
 .card-warn{background:var(--warnbg);box-shadow:none;}
-.lbl{font-size:9px;color:var(--g400);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px;}
-.val{font-size:13px;color:var(--g900);font-weight:700;}
-.val.mono{font-family:monospace;font-size:9.5px;color:var(--n700);line-height:1.65;word-break:break-all;}
-.ctitle{font-size:12px;font-weight:700;color:var(--n800);margin-bottom:9px;}
-.row{display:flex;gap:8px;margin-bottom:10px;}
+.lbl{font-size:7px;color:var(--g400);letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px;}
+.val{font-size:10px;color:var(--g900);font-weight:700;}
+.val.mono{font-family:monospace;font-size:7.5px;color:var(--n700);line-height:1.55;word-break:break-all;}
+.ctitle{font-size:9.5px;font-weight:700;color:var(--n800);margin-bottom:6px;}
+.row{display:flex;gap:6px;margin-bottom:7px;}
 .f1{flex:1;}
 
-/* Buttons */
+/* ── Buttons ──────────────────────────────────── */
 .btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:5px;
-  padding:10px 14px;border-radius:9px;font-size:12px;font-weight:600;
-  border:none;cursor:pointer;transition:filter .15s,transform .1s;
-  width:100%;letter-spacing:.01em;
+  display:inline-flex;align-items:center;justify-content:center;gap:4px;
+  padding:7px 10px;border-radius:7px;font-size:9px;font-weight:600;
+  border:none;cursor:pointer;width:100%;
 }
-.btn:active{transform:scale(.97);}
 .btn-p{background:var(--n800);color:#fff;}
-.btn-p:hover{filter:brightness(1.15);}
 .btn-a{background:var(--o500);color:#fff;}
-.btn-a:hover{filter:brightness(1.1);}
 .btn-o{background:transparent;color:var(--n800);border:1.5px solid var(--n700);}
-.btn-o:hover{background:var(--infobg);}
-.btn-d{background:var(--errbg);color:var(--err);border:1.5px solid var(--err);}
-.btn-t{background:transparent;color:var(--n600);font-size:10.5px;padding:5px 10px;width:auto;}
-.btn-sm{padding:8px 12px;font-size:11px;}
-.btn-icon{width:auto;padding:8px;}
+.btn-sm{padding:6px 9px;font-size:8.5px;}
 
-/* Forms */
-.fg{margin-bottom:9px;}
-.fl{font-size:9px;color:var(--g500);margin-bottom:3px;display:block;letter-spacing:.04em;}
+/* ── Forms ────────────────────────────────────── */
+.fg{margin-bottom:7px;}
+.fl{font-size:7px;color:var(--g500);margin-bottom:2px;display:block;letter-spacing:.04em;}
 .fi{
-  width:100%;padding:9px 11px;border:1.5px solid var(--g300);
-  border-radius:8px;font-size:12px;color:var(--g900);
-  background:#fff;outline:none;font-family:inherit;transition:border .2s;
+  width:100%;padding:6px 8px;border:1.5px solid var(--g300);
+  border-radius:6px;font-size:9px;color:var(--g900);
+  background:#fff;outline:none;font-family:inherit;
 }
-.fi:focus{border-color:var(--n400);box-shadow:0 0 0 3px rgba(51,133,240,.12);}
-textarea.fi{min-height:54px;resize:none;font-family:monospace;font-size:10px;line-height:1.5;}
-.frow{display:flex;gap:7px;}
+.fi:focus{border-color:var(--n400);}
+textarea.fi{min-height:40px;resize:none;font-family:monospace;font-size:7.5px;line-height:1.5;}
+.frow{display:flex;gap:5px;}
 .frow .fg{flex:1;}
 
-/* Toggle switch */
-.srow{display:flex;align-items:center;justify-content:space-between;padding:2px 0;}
-.slbl{font-size:13px;font-weight:700;color:var(--g900);}
-.ssub{font-size:10px;color:var(--g500);margin-top:2px;}
-.tog{
-  width:42px;height:24px;border-radius:12px;cursor:pointer;
-  transition:background .25s;position:relative;flex-shrink:0;
-}
+/* ── Toggle ───────────────────────────────────── */
+.srow{display:flex;align-items:center;justify-content:space-between;padding:1px 0;}
+.slbl{font-size:10px;font-weight:700;color:var(--g900);}
+.ssub{font-size:7.5px;color:var(--g500);margin-top:1px;}
+.tog{width:32px;height:18px;border-radius:9px;position:relative;flex-shrink:0;}
 .tog::after{
-  content:'';position:absolute;top:3px;left:3px;
-  width:18px;height:18px;background:#fff;border-radius:50%;
-  transition:transform .25s;box-shadow:0 1px 4px rgba(0,0,0,.25);
+  content:'';position:absolute;top:2px;left:2px;
+  width:14px;height:14px;background:#fff;border-radius:50%;
+  box-shadow:0 1px 3px rgba(0,0,0,.25);
 }
 .tog.on{background:var(--n800);}
-.tog.on::after{transform:translateX(18px);}
+.tog.on::after{transform:translateX(14px);}
 .tog.off{background:var(--g300);}
+.divl{height:1px;background:var(--g200);margin:7px 0;}
 
-/* Divider */
-.divl{height:1px;background:var(--g200);margin:10px 0;}
-
-/* Tags / chips */
-.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;}
+/* ── Tags/chips ───────────────────────────────── */
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px;}
 .tag{
-  display:inline-flex;align-items:center;gap:3px;
-  padding:4px 10px;background:var(--n100);color:var(--n800);
-  border-radius:14px;font-size:10px;font-weight:600;
+  display:inline-flex;align-items:center;gap:2px;
+  padding:3px 8px;background:var(--n100);color:var(--n800);
+  border-radius:12px;font-size:7.5px;font-weight:600;
 }
-.tag .x{cursor:pointer;font-size:13px;color:var(--n600);line-height:1;padding-left:1px;}
-.tag .x:hover{color:var(--err);}
 
-/* Attribute rows */
-.ar{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid var(--g100);gap:5px;}
+/* ── Attribute rows ───────────────────────────── */
+.ar{display:flex;align-items:center;padding:5px 0;border-bottom:1px solid var(--g100);gap:4px;}
 .ar:last-child{border-bottom:none;}
-.ak{font-size:10.5px;font-weight:700;color:var(--n700);font-family:monospace;min-width:72px;flex-shrink:0;}
-.aeq{font-size:10px;color:var(--g400);flex-shrink:0;}
-.av{font-size:10.5px;color:var(--g700);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.adel{font-size:14px;color:var(--g400);cursor:pointer;padding:3px;flex-shrink:0;transition:color .15s;}
-.adel:hover{color:var(--err);}
+.ak{font-size:8px;font-weight:700;color:var(--n700);font-family:monospace;min-width:52px;flex-shrink:0;}
+.aeq{font-size:8px;color:var(--g400);flex-shrink:0;}
+.av{font-size:8px;color:var(--g700);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 
-/* Log */
+/* ── Log ──────────────────────────────────────── */
 .log{
-  background:var(--g50);border-radius:8px;padding:9px;
-  font-family:monospace;font-size:9px;color:var(--g700);
-  line-height:1.8;min-height:58px;white-space:pre-wrap;word-break:break-word;
+  background:var(--g50);border-radius:6px;padding:7px;
+  font-family:monospace;font-size:7px;color:var(--g700);
+  line-height:1.7;min-height:44px;white-space:pre-wrap;word-break:break-word;
   border:1px solid var(--g200);
 }
 
-/* Section heading */
+/* ── Section heading ──────────────────────────── */
 .sec{
-  font-size:10px;font-weight:700;color:var(--g700);
-  text-transform:uppercase;letter-spacing:.06em;margin:4px 0 8px;
-  display:flex;align-items:center;gap:6px;
+  font-size:7.5px;font-weight:700;color:var(--g700);
+  text-transform:uppercase;letter-spacing:.06em;margin:3px 0 6px;
+  display:flex;align-items:center;gap:5px;
 }
 .sec::after{content:'';flex:1;height:1px;background:var(--g200);}
 
-/* Badge */
-.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:9px;font-weight:700;}
+/* ── Badge ────────────────────────────────────── */
+.badge{display:inline-block;padding:1px 6px;border-radius:8px;font-size:7px;font-weight:700;}
 .b-ok{background:var(--okbg);color:var(--ok);}
-.b-err{background:var(--errbg);color:var(--err);}
 .b-warn{background:var(--warnbg);color:var(--warn);}
 .b-info{background:var(--infobg);color:var(--n600);}
 
-/* Demo banner */
+/* ── Demo banner ──────────────────────────────── */
 .dbanner{
-  background:var(--warnbg);padding:7px 13px;
-  font-size:9px;color:var(--warn);line-height:1.5;
-  display:flex;gap:6px;align-items:flex-start;flex-shrink:0;
+  background:var(--warnbg);padding:5px 10px;
+  font-size:7.5px;color:var(--warn);line-height:1.5;flex-shrink:0;
   border-bottom:1px solid #f0d870;
 }
 
-/* Bottom nav */
+/* ── Bottom nav ───────────────────────────────── */
 .bnav{
   display:flex;background:#fff;
-  border-top:1px solid var(--g200);
-  box-shadow:0 -2px 10px rgba(0,0,0,.06);flex-shrink:0;
+  border-top:1px solid var(--g200);flex-shrink:0;
 }
 .ni{
   flex:1;display:flex;flex-direction:column;align-items:center;
-  padding:7px 0 5px;cursor:pointer;border:none;background:transparent;
-  gap:2px;transition:background .15s;
+  padding:5px 0 4px;border:none;background:transparent;gap:1px;
 }
-.ni:active{background:var(--g100);}
-.ni .ico{font-size:17px;line-height:1;}
-.ni .ntxt{font-size:8px;font-weight:600;}
+.ni .ico{font-size:13px;line-height:1;}
+.ni .ntxt{font-size:6px;font-weight:600;}
 .ni.on .ntxt{color:var(--n800);}
-.ni:not(.on) .ico{opacity:.35;}
+.ni:not(.on) .ico{opacity:.3;}
 .ni:not(.on) .ntxt{color:var(--g400);}
-/* active indicator */
 .ni.on{position:relative;}
 .ni.on::before{
   content:'';position:absolute;top:0;left:20%;right:20%;
   height:2px;background:var(--n800);border-radius:0 0 2px 2px;
 }
 
-/* ═══════════════════════════════════════════════
-   SPLASH SCREEN
-═══════════════════════════════════════════════ */
-#splash{
-  background:linear-gradient(145deg,var(--n900) 0%,var(--n700) 60%,#0042A0 100%);
-  align-items:center;justify-content:center;cursor:pointer;
-  position:relative;overflow:hidden;
-}
-/* background decorative circles */
-#splash::before{
-  content:'';position:absolute;width:280px;height:280px;
-  border-radius:50%;border:1px solid rgba(255,255,255,.05);
-  top:-60px;right:-80px;
-}
-#splash::after{
-  content:'';position:absolute;width:200px;height:200px;
-  border-radius:50%;border:1px solid rgba(255,255,255,.05);
-  bottom:-40px;left:-60px;
-}
-.sp-center{display:flex;flex-direction:column;align-items:center;z-index:1;}
-.sp-logo{
-  width:72px;height:72px;background:var(--o500);border-radius:20px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:28px;font-weight:900;color:#fff;margin-bottom:20px;
-  box-shadow:0 8px 32px rgba(244,126,23,.4);
-  letter-spacing:-1px;
-}
-.sp-name{font-size:26px;font-weight:900;color:#fff;letter-spacing:-.02em;}
-.sp-tag{font-size:11px;color:var(--n300);margin-top:3px;letter-spacing:.06em;text-transform:uppercase;}
-.sp-divider{width:32px;height:2px;background:var(--o500);border-radius:1px;margin:18px 0;}
-.sp-sfmc{display:flex;align-items:center;gap:6px;}
-.sp-sfmc-logo{
-  width:22px;height:22px;background:#00A1E0;border-radius:4px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:11px;font-weight:900;color:#fff;
-}
-.sp-sfmc-txt{font-size:10px;color:var(--n200);letter-spacing:.04em;}
-.sp-bottom{
-  position:absolute;bottom:30px;left:0;right:0;
-  display:flex;flex-direction:column;align-items:center;gap:6px;z-index:1;
-}
-.sp-prog{
-  width:140px;height:2px;background:rgba(255,255,255,.1);border-radius:1px;overflow:hidden;
-}
-.sp-prog-bar{
-  height:100%;background:var(--o500);border-radius:1px;
-  animation:prog 2.4s ease-out forwards;
-}
-@keyframes prog{0%{width:0%}100%{width:100%}}
-.sp-status{font-size:9.5px;color:var(--n400);letter-spacing:.05em;}
-.sp-hint{font-size:9px;color:rgba(255,255,255,.2);letter-spacing:.02em;}
-
-/* ═══════════════════════════════════════════════
-   HOME
-═══════════════════════════════════════════════ */
-.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
-.stat-card{
-  background:var(--w);border-radius:var(--radius);padding:12px;
-  box-shadow:0 1px 4px rgba(0,0,0,.07),0 0 0 1px rgba(0,0,0,.04);
-}
-.stat-num{font-size:22px;font-weight:800;color:var(--n800);line-height:1;}
-.stat-lbl{font-size:9px;color:var(--g500);margin-top:3px;letter-spacing:.04em;}
-
-/* ═══════════════════════════════════════════════
-   INBOX SCREEN
-═══════════════════════════════════════════════ */
-.inbox-item{
-  display:flex;gap:10px;padding:11px 0;border-bottom:1px solid var(--g100);
-  cursor:pointer;transition:background .15s;
-}
+/* ── Inbox ────────────────────────────────────── */
+.inbox-item{display:flex;gap:7px;padding:7px 0;border-bottom:1px solid var(--g100);}
 .inbox-item:last-child{border-bottom:none;}
-.inbox-item:active{background:var(--g50);}
 .inbox-avatar{
-  width:36px;height:36px;border-radius:10px;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;font-size:16px;
+  width:28px;height:28px;border-radius:7px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:12px;
 }
 .inbox-body{flex:1;overflow:hidden;}
-.inbox-title{font-size:12px;font-weight:700;color:var(--g900);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.inbox-preview{font-size:10px;color:var(--g500);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.inbox-meta{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;}
-.inbox-time{font-size:9px;color:var(--g400);}
-.inbox-unread{
-  width:8px;height:8px;border-radius:50%;background:var(--n500);
-}
+.inbox-title{font-size:9px;font-weight:700;color:var(--g900);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.inbox-preview{font-size:7.5px;color:var(--g500);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.inbox-meta{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0;}
+.inbox-time{font-size:7px;color:var(--g400);}
+.inbox-unread{width:6px;height:6px;border-radius:50%;background:var(--n500);}
 
-/* ═══════════════════════════════════════════════
-   SNACKBAR
-═══════════════════════════════════════════════ */
-#snack{
-  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
-  background:var(--g900);color:#fff;padding:10px 20px;
-  border-radius:24px;font-size:12px;font-weight:500;
-  opacity:0;transition:opacity .3s;z-index:9999;
-  pointer-events:none;white-space:nowrap;
-  box-shadow:0 4px 20px rgba(0,0,0,.4);
-  max-width:320px;text-align:center;
-}
-#snack.show{opacity:1;}
+/* ── Stat grid ────────────────────────────────── */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:7px;}
+.stat-card{background:var(--w);border-radius:9px;padding:9px;box-shadow:0 1px 3px rgba(0,0,0,.07),0 0 0 1px rgba(0,0,0,.04);}
+.stat-num{font-size:17px;font-weight:800;color:var(--n800);line-height:1;}
+.stat-lbl{font-size:7px;color:var(--g500);margin-top:2px;letter-spacing:.04em;}
 
-/* ═══════════════════════════════════════════════
-   HINT BAR
-═══════════════════════════════════════════════ */
-.hint{color:rgba(255,255,255,.3);font-size:10px;letter-spacing:.04em;text-align:center;}
+/* ── Code block ───────────────────────────────── */
+.coderef{
+  padding:8px;background:var(--g50);border-radius:7px;border:1px solid var(--g200);
+  font-size:7px;color:var(--g500);line-height:1.7;font-family:monospace;
+}
+.coderef code{background:var(--g200);padding:1px 3px;border-radius:3px;color:var(--n700);}
+
+/* ── Splash ───────────────────────────────────── */
+.splash-scr{
+  background:linear-gradient(145deg,var(--n900) 0%,var(--n700) 60%,#0042A0 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.splash-scr::before{
+  content:'';position:absolute;width:200px;height:200px;
+  border-radius:50%;border:1px solid rgba(255,255,255,.05);top:-40px;right:-60px;
+}
+.sp-logo{
+  width:52px;height:52px;background:var(--o500);border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:900;color:#fff;margin-bottom:14px;
+  box-shadow:0 6px 24px rgba(244,126,23,.4);letter-spacing:-1px;
+  z-index:1;
+}
+.sp-name{font-size:19px;font-weight:900;color:#fff;letter-spacing:-.02em;z-index:1;}
+.sp-tag{font-size:8px;color:var(--n300);margin-top:2px;letter-spacing:.06em;text-transform:uppercase;z-index:1;}
+.sp-div{width:24px;height:2px;background:var(--o500);border-radius:1px;margin:12px 0;z-index:1;}
+.sp-sfmc{display:flex;align-items:center;gap:5px;z-index:1;}
+.sp-sfmc-logo{
+  width:16px;height:16px;background:#00A1E0;border-radius:3px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:8px;font-weight:900;color:#fff;
+}
+.sp-sfmc-txt{font-size:8px;color:var(--n200);letter-spacing:.04em;}
+.sp-bottom{
+  position:absolute;bottom:20px;left:0;right:0;
+  display:flex;flex-direction:column;align-items:center;gap:4px;z-index:1;
+}
+.sp-prog{width:100px;height:2px;background:rgba(255,255,255,.1);border-radius:1px;overflow:hidden;}
+.sp-prog-bar{height:100%;width:75%;background:var(--o500);border-radius:1px;}
+.sp-status{font-size:7.5px;color:var(--n400);letter-spacing:.05em;}
 </style>
 </head>
 <body>
 
-<!-- Quick nav tabs -->
-<div class="qtabs">
-  <button class="qt" onclick="nav('splash')">Splash</button>
-  <button class="qt qon" onclick="nav('home')">Dashboard</button>
-  <button class="qt" onclick="nav('identity')">Identidade</button>
-  <button class="qt" onclick="nav('push')">Push</button>
-  <button class="qt" onclick="nav('attributes')">Atributos</button>
-  <button class="qt" onclick="nav('analytics')">Analytics</button>
-  <button class="qt" onclick="nav('inbox')">Inbox</button>
-</div>
+<h1>Marketdata SFMC Demo</h1>
+<p class="sub">Android App · Salesforce Marketing Cloud SDK · Todas as telas</p>
 
-<!-- ═══════════════ PHONE ═══════════════ -->
-<div class="phone">
-  <div class="notch"></div>
-  <div class="swrap">
+<div class="gallery">
 
-    <!-- ████████ SPLASH ████████ -->
-    <div class="scr on" id="splash" onclick="nav('home')">
-      <div class="sp-center">
-        <div class="sp-logo">MD</div>
-        <div class="sp-name">Marketdata</div>
-        <div class="sp-tag">Marketing Intelligence</div>
-        <div class="sp-divider"></div>
-        <div class="sp-sfmc">
-          <div class="sp-sfmc-logo">SF</div>
-          <div class="sp-sfmc-txt">Salesforce Marketing Cloud</div>
-        </div>
-      </div>
-      <div class="sp-bottom">
-        <div class="sp-prog"><div class="sp-prog-bar"></div></div>
-        <div class="sp-status">Inicializando SDK…</div>
-        <div class="sp-hint">Toque para continuar</div>
-      </div>
-    </div>
-
-    <!-- ████████ HOME / DASHBOARD ████████ -->
-    <div class="scr" id="home">
-      <div class="sb"><span class="time">9:41</span><div class="icons"><span>5G</span><span>▓▓</span></div></div>
-      <div class="hdr">
-        <div class="hdr-title">Dashboard</div>
-        <div class="hdr-sub">Salesforce Marketing Cloud</div>
-        <span class="hdr-chip c-demo"><span class="dot"></span>SDK Demo Mode</span>
-      </div>
-      <div class="dbanner">⚠ Configure as credenciais SFMC reais no BuildConfig para conectar ao servidor.</div>
-      <div class="body">
-        <div class="pad">
-
-          <!-- Contact key -->
-          <div class="card">
-            <div class="lbl">Contact Key</div>
-            <div class="val mono" style="font-size:11px;color:var(--n800)">igor.garcia@marketdata.com.br</div>
+  <!-- ════════════════════════════════════════════ -->
+  <!-- TELA 1: SPLASH                              -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="screen-wrap">
+    <div class="screen-label">01 · Splash</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="swrap">
+        <div class="splash-scr" style="height:480px;">
+          <div class="sp-logo">MD</div>
+          <div class="sp-name">Marketdata</div>
+          <div class="sp-tag">Marketing Intelligence</div>
+          <div class="sp-div"></div>
+          <div class="sp-sfmc">
+            <div class="sp-sfmc-logo">SF</div>
+            <div class="sp-sfmc-txt">Salesforce Marketing Cloud</div>
           </div>
-
-          <!-- Stats grid -->
-          <div class="stat-grid">
-            <div class="stat-card">
-              <div class="stat-num" style="color:var(--ok)">ON</div>
-              <div class="stat-lbl">Push ativo</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-num">3</div>
-              <div class="stat-lbl">Notificações</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-num">4</div>
-              <div class="stat-lbl">Atributos</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-num" style="color:var(--o500)">4</div>
-              <div class="stat-lbl">Tags ativas</div>
-            </div>
-          </div>
-
-          <!-- FCM Token -->
-          <div class="card card-blue">
-            <div class="lbl" style="color:var(--n600)">Token FCM</div>
-            <div class="val mono">fHk9xM2qRpW:APA91bHy8VjKqL…<br>XmN3tG5sPdY2wCzA7rEn1vBuIo</div>
-          </div>
-
-          <!-- Quick actions -->
-          <div class="sec">Ações Rápidas</div>
-          <div class="row">
-            <button class="btn btn-p f1 btn-sm" onclick="nav('identity')">👤 Identidade</button>
-            <button class="btn btn-a f1 btn-sm" onclick="nav('push')">🔔 Push</button>
-          </div>
-          <div class="row" style="margin-bottom:0">
-            <button class="btn btn-o f1 btn-sm" onclick="nav('attributes')">⚙️ Atributos</button>
-            <button class="btn btn-o f1 btn-sm" onclick="nav('analytics')">📊 Analytics</button>
-          </div>
-          <div style="text-align:center;margin-top:18px;font-size:9px;color:var(--g400)">
-            Marketdata SFMC Demo · v1.0.0
+          <div class="sp-bottom">
+            <div class="sp-prog"><div class="sp-prog-bar"></div></div>
+            <div class="sp-status">Inicializando SDK…</div>
           </div>
         </div>
       </div>
-      <div class="bnav">
-        <button class="ni on" onclick="nav('home')"><span class="ico">🏠</span><span class="ntxt">Início</span></button>
-        <button class="ni" onclick="nav('identity')"><span class="ico">👤</span><span class="ntxt">Identidade</span></button>
-        <button class="ni" onclick="nav('push')"><span class="ico">🔔</span><span class="ntxt">Push</span></button>
-        <button class="ni" onclick="nav('attributes')"><span class="ico">⚙️</span><span class="ntxt">Atributos</span></button>
-        <button class="ni" onclick="nav('analytics')"><span class="ico">📊</span><span class="ntxt">Analytics</span></button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- TELA 2: HOME / DASHBOARD                    -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="screen-wrap">
+    <div class="screen-label">02 · Dashboard</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="swrap">
+        <div style="display:flex;flex-direction:column;height:480px;">
+          <div class="sb"><span class="time">9:41</span><div class="icons"><span>5G</span><span>▓▓</span></div></div>
+          <div class="hdr">
+            <div class="hdr-title">Dashboard</div>
+            <div class="hdr-sub">Salesforce Marketing Cloud</div>
+            <span class="hdr-chip c-demo"><span class="dot"></span> SDK Demo Mode</span>
+          </div>
+          <div class="dbanner">⚠ Configure as credenciais SFMC no BuildConfig para conectar ao servidor.</div>
+          <div class="body" style="flex:1;">
+            <div class="pad">
+              <div class="card">
+                <div class="lbl">Contact Key</div>
+                <div class="val mono" style="font-size:8.5px;color:var(--n800)">igor.garcia@marketdata.com.br</div>
+              </div>
+              <div class="stat-grid">
+                <div class="stat-card"><div class="stat-num" style="color:var(--ok)">ON</div><div class="stat-lbl">Push ativo</div></div>
+                <div class="stat-card"><div class="stat-num">3</div><div class="stat-lbl">Notificações</div></div>
+                <div class="stat-card"><div class="stat-num">4</div><div class="stat-lbl">Atributos</div></div>
+                <div class="stat-card"><div class="stat-num" style="color:var(--o500)">4</div><div class="stat-lbl">Tags ativas</div></div>
+              </div>
+              <div class="card card-blue">
+                <div class="lbl" style="color:var(--n600)">Token FCM</div>
+                <div class="val mono">fHk9xM2qRpW:APA91bHy8VjK…<br>XmN3tG5sPdY2wCzA7rEn1v</div>
+              </div>
+              <div class="sec">Ações Rápidas</div>
+              <div class="row">
+                <button class="btn btn-p f1 btn-sm">👤 Identidade</button>
+                <button class="btn btn-a f1 btn-sm">🔔 Push</button>
+              </div>
+              <div class="row" style="margin-bottom:0">
+                <button class="btn btn-o f1 btn-sm">⚙️ Atributos</button>
+                <button class="btn btn-o f1 btn-sm">📊 Analytics</button>
+              </div>
+            </div>
+          </div>
+          <div class="bnav">
+            <button class="ni on"><span class="ico">🏠</span><span class="ntxt">Início</span></button>
+            <button class="ni"><span class="ico">👤</span><span class="ntxt">Identidade</span></button>
+            <button class="ni"><span class="ico">🔔</span><span class="ntxt">Push</span></button>
+            <button class="ni"><span class="ico">⚙️</span><span class="ntxt">Atributos</span></button>
+            <button class="ni"><span class="ico">📊</span><span class="ntxt">Analytics</span></button>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 
-    <!-- ████████ IDENTIDADE ████████ -->
-    <div class="scr" id="identity">
-      <div class="sb"><span class="time">9:41</span><div class="icons"><span>5G</span><span>▓▓</span></div></div>
-      <div class="hdr">
-        <div class="hdr-title">Identificação do Contato</div>
-        <div class="hdr-sub">Configure o contato no Salesforce Marketing Cloud</div>
-      </div>
-      <div class="body">
-        <div class="pad">
-          <div class="fg">
-            <label class="fl">Contact Key *</label>
-            <input class="fi" id="ck" value="igor.garcia@marketdata.com.br" placeholder="usuario@empresa.com">
+  <!-- ════════════════════════════════════════════ -->
+  <!-- TELA 3: IDENTIDADE                          -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="screen-wrap">
+    <div class="screen-label">03 · Identidade</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="swrap">
+        <div style="display:flex;flex-direction:column;height:480px;">
+          <div class="sb"><span class="time">9:41</span><div class="icons"><span>5G</span><span>▓▓</span></div></div>
+          <div class="hdr">
+            <div class="hdr-title">Identificação do Contato</div>
+            <div class="hdr-sub">Configure o contato no SFMC</div>
           </div>
-          <div class="frow">
-            <div class="fg"><label class="fl">Primeiro Nome</label><input class="fi" id="fn" value="Igor" placeholder="João"></div>
-            <div class="fg"><label class="fl">Sobrenome</label><input class="fi" id="ln" value="Garcia" placeholder="Silva"></div>
-          </div>
-          <div class="fg"><label class="fl">E-mail</label><input class="fi" id="em" type="email" value="igor@marketdata.com.br" placeholder="joao@empresa.com"></div>
-          <div class="fg"><label class="fl">Telefone</label><input class="fi" id="ph" value="+55 11 99999-8888" placeholder="+55 11 9..."></div>
-
-          <button class="btn btn-p" style="margin-bottom:12px" onclick="saveIdentity()">Salvar Identidade</button>
-
-          <!-- Current values card -->
-          <div class="card card-blue">
-            <div class="ctitle" style="color:var(--n700)">Valores Atuais no SFMC</div>
-            <div class="val mono" id="curVals">contactKey : igor.garcia@marketdata.com.br
+          <div class="body" style="flex:1;">
+            <div class="pad">
+              <div class="fg"><label class="fl">Contact Key *</label><input class="fi" value="igor.garcia@marketdata.com.br" readonly></div>
+              <div class="frow">
+                <div class="fg"><label class="fl">Primeiro Nome</label><input class="fi" value="Igor" readonly></div>
+                <div class="fg"><label class="fl">Sobrenome</label><input class="fi" value="Garcia" readonly></div>
+              </div>
+              <div class="fg"><label class="fl">E-mail</label><input class="fi" value="igor@marketdata.com.br" readonly></div>
+              <div class="fg"><label class="fl">Telefone</label><input class="fi" value="+55 11 99999-8888" readonly></div>
+              <button class="btn btn-p" style="margin-bottom:9px">Salvar Identidade</button>
+              <div class="card card-blue">
+                <div class="ctitle" style="color:var(--n700)">Valores Atuais no SFMC</div>
+                <div class="val mono">contactKey : igor.garcia@marketdata.com.br
 firstName  : Igor
 lastName   : Garcia
 email      : igor@marketdata.com.br
 phone      : +55 11 99999-8888</div>
-          </div>
-
-          <!-- Info box -->
-          <div style="padding:10px;background:var(--g50);border-radius:9px;border:1px solid var(--g200)">
-            <div style="font-size:9px;color:var(--g500);line-height:1.6">
-              <strong style="color:var(--n700)">Contact Key</strong> é o identificador único do contato no SFMC (normalmente e-mail ou ID do cliente). Após salvar, o SDK envia o registro para o servidor via <code style="background:var(--g200);padding:1px 4px;border-radius:3px">registrationManager.edit().commit()</code>.
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="bnav">
-        <button class="ni" onclick="nav('home')"><span class="ico">🏠</span><span class="ntxt">Início</span></button>
-        <button class="ni on" onclick="nav('identity')"><span class="ico">👤</span><span class="ntxt">Identidade</span></button>
-        <button class="ni" onclick="nav('push')"><span class="ico">🔔</span><span class="ntxt">Push</span></button>
-        <button class="ni" onclick="nav('attributes')"><span class="ico">⚙️</span><span class="ntxt">Atributos</span></button>
-        <button class="ni" onclick="nav('analytics')"><span class="ico">📊</span><span class="ntxt">Analytics</span></button>
-      </div>
-    </div>
-
-    <!-- ████████ PUSH NOTIFICATIONS ████████ -->
-    <div class="scr" id="push">
-      <div class="sb"><span class="time">9:41</span><div class="icons"><span>5G</span><span>▓▓</span></div></div>
-      <div class="hdr">
-        <div class="hdr-title">Push Notifications</div>
-        <div class="hdr-sub">Gerencie notificações push via SFMC</div>
-      </div>
-      <div class="body">
-        <div class="pad">
-
-          <!-- Push toggle card -->
-          <div class="card">
-            <div class="srow">
-              <div>
-                <div class="slbl">Push Habilitado</div>
-                <div class="ssub" id="ptxt">SDK: pushMessageManager.enablePush() ✓</div>
               </div>
-              <div class="tog on" id="ptog" onclick="togglePush()"></div>
-            </div>
-            <div class="divl"></div>
-            <div class="srow">
-              <span style="font-size:11.5px;color:var(--g700)">Permissão do Sistema</span>
-              <span class="badge b-ok" id="permBadge">✓ Concedida</span>
-            </div>
-            <div class="divl"></div>
-            <div class="srow">
-              <span style="font-size:11.5px;color:var(--g700)">Android 13+ (POST_NOTIFICATIONS)</span>
-              <span class="badge b-ok">✓ OK</span>
-            </div>
-          </div>
-
-          <!-- FCM Token -->
-          <div class="card">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-              <span class="ctitle" style="margin-bottom:0">Token FCM (Device Token)</span>
-              <button class="btn btn-t" onclick="snack('📋 Token copiado para a área de transferência!')">Copiar</button>
-            </div>
-            <div class="val mono" style="background:var(--g50);padding:8px;border-radius:7px;border:1px solid var(--g200)">fHk9xM2qRpW:APA91bHy8VjKqLmN3tG5sPdY2wCzA7rEn1vBuIoXdFjGhTkLsRmPqNzWe4aBcYuOp6vHfDi</div>
-          </div>
-
-          <!-- Last push received -->
-          <div class="card">
-            <div class="ctitle">📨 Última Notificação Recebida</div>
-            <div style="display:flex;flex-direction:column;gap:6px">
-              <div style="display:flex;gap:8px">
-                <span style="font-size:9px;color:var(--g400);width:40px;flex-shrink:0">title</span>
-                <span style="font-size:11px;color:var(--g900);font-weight:600">Oferta Especial Marketdata</span>
-              </div>
-              <div style="display:flex;gap:8px">
-                <span style="font-size:9px;color:var(--g400);width:40px;flex-shrink:0">body</span>
-                <span style="font-size:11px;color:var(--g700)">Desconto de 30% só hoje — não perca!</span>
-              </div>
-              <div style="display:flex;gap:8px">
-                <span style="font-size:9px;color:var(--g400);width:40px;flex-shrink:0">data</span>
-                <span class="val mono" style="font-size:9px">{"campaign":"black_friday_24","deeplink":"/ofertas"}</span>
-              </div>
-              <div style="display:flex;gap:8px">
-                <span style="font-size:9px;color:var(--g400);width:40px;flex-shrink:0">horário</span>
-                <span style="font-size:10px;color:var(--g500)">14:32:07 — 06/06/2025</span>
+              <div class="coderef">
+                sdk.registrationManager.edit()<br>
+                &nbsp;&nbsp;.setContactKey("email@...")<br>
+                &nbsp;&nbsp;.setAttribute("firstName","Igor")<br>
+                &nbsp;&nbsp;.commit()
               </div>
             </div>
           </div>
-
-          <!-- Push history -->
-          <div class="card">
-            <div class="ctitle">Histórico desta sessão</div>
-            <div style="display:flex;flex-direction:column;gap:6px">
-              <div style="display:flex;align-items:center;gap:8px;padding:6px;background:var(--g50);border-radius:7px">
-                <span style="font-size:16px">🎯</span>
-                <div style="flex:1"><div style="font-size:10px;font-weight:600">Oferta Especial Marketdata</div><div style="font-size:9px;color:var(--g400)">14:32 · campaign: black_friday_24</div></div>
-                <span class="badge b-ok" style="font-size:8px">lida</span>
-              </div>
-              <div style="display:flex;align-items:center;gap:8px;padding:6px;background:var(--g50);border-radius:7px">
-                <span style="font-size:16px">📊</span>
-                <div style="flex:1"><div style="font-size:10px;font-weight:600">Relatório semanal disponível</div><div style="font-size:9px;color:var(--g400)">09:15 · campaign: weekly_report</div></div>
-                <span class="badge b-warn" style="font-size:8px">nova</span>
-              </div>
-              <div style="display:flex;align-items:center;gap:8px;padding:6px;background:var(--g50);border-radius:7px">
-                <span style="font-size:16px">🚀</span>
-                <div style="flex:1"><div style="font-size:10px;font-weight:600">Novo produto: Data Intelligence</div><div style="font-size:9px;color:var(--g400)">08:02 · campaign: product_launch</div></div>
-                <span class="badge b-ok" style="font-size:8px">lida</span>
-              </div>
-            </div>
+          <div class="bnav">
+            <button class="ni"><span class="ico">🏠</span><span class="ntxt">Início</span></button>
+            <button class="ni on"><span class="ico">👤</span><span class="ntxt">Identidade</span></button>
+            <button class="ni"><span class="ico">🔔</span><span class="ntxt">Push</span></button>
+            <button class="ni"><span class="ico">⚙️</span><span class="ntxt">Atributos</span></button>
+            <button class="ni"><span class="ico">📊</span><span class="ntxt">Analytics</span></button>
           </div>
         </div>
       </div>
-      <div class="bnav">
-        <button class="ni" onclick="nav('home')"><span class="ico">🏠</span><span class="ntxt">Início</span></button>
-        <button class="ni" onclick="nav('identity')"><span class="ico">👤</span><span class="ntxt">Identidade</span></button>
-        <button class="ni on" onclick="nav('push')"><span class="ico">🔔</span><span class="ntxt">Push</span></button>
-        <button class="ni" onclick="nav('attributes')"><span class="ico">⚙️</span><span class="ntxt">Atributos</span></button>
-        <button class="ni" onclick="nav('analytics')"><span class="ico">📊</span><span class="ntxt">Analytics</span></button>
-      </div>
     </div>
+  </div>
 
-    <!-- ████████ ATRIBUTOS & TAGS ████████ -->
-    <div class="scr" id="attributes">
-      <div class="sb"><span class="time">9:41</span><div class="icons"><span>5G</span><span>▓▓</span></div></div>
-      <div class="hdr">
-        <div class="hdr-title">Atributos e Tags</div>
-        <div class="hdr-sub">Perfil do contato no Salesforce Marketing Cloud</div>
-      </div>
-      <div class="body">
-        <div class="pad">
-
-          <!-- Add attribute -->
-          <div class="sec">Atributos Personalizados</div>
-          <div style="display:flex;gap:5px;align-items:flex-end;margin-bottom:8px">
-            <div style="flex:2"><label class="fl">Atributo</label><input class="fi" id="ak" placeholder="ex: plano"></div>
-            <div style="flex:2"><label class="fl">Valor</label><input class="fi" id="av" placeholder="ex: premium"></div>
-            <button class="btn btn-p btn-sm" style="width:auto;white-space:nowrap;margin-bottom:0" onclick="addAttr()">+ Add</button>
+  <!-- ════════════════════════════════════════════ -->
+  <!-- TELA 4: PUSH NOTIFICATIONS                  -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="screen-wrap">
+    <div class="screen-label">04 · Push Notifications</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="swrap">
+        <div style="display:flex;flex-direction:column;height:480px;">
+          <div class="sb"><span class="time">9:41</span><div class="icons"><span>5G</span><span>▓▓</span></div></div>
+          <div class="hdr">
+            <div class="hdr-title">Push Notifications</div>
+            <div class="hdr-sub">Gerencie notificações push via SFMC</div>
           </div>
-
-          <!-- Attribute list -->
-          <div class="card" style="padding:4px 13px;margin-bottom:14px">
-            <div id="attrList">
-              <div class="ar"><span class="ak">plano</span><span class="aeq">=</span><span class="av">premium</span><span class="adel" onclick="rmAttr(this)">🗑</span></div>
-              <div class="ar"><span class="ak">segmento</span><span class="aeq">=</span><span class="av">varejo_b2b</span><span class="adel" onclick="rmAttr(this)">🗑</span></div>
-              <div class="ar"><span class="ak">cidade</span><span class="aeq">=</span><span class="av">São Paulo</span><span class="adel" onclick="rmAttr(this)">🗑</span></div>
-              <div class="ar"><span class="ak">empresa</span><span class="aeq">=</span><span class="av">Marketdata</span><span class="adel" onclick="rmAttr(this)">🗑</span></div>
+          <div class="body" style="flex:1;">
+            <div class="pad">
+              <div class="card">
+                <div class="srow">
+                  <div><div class="slbl">Push Habilitado</div><div class="ssub">pushMessageManager.enablePush() ✓</div></div>
+                  <div class="tog on"></div>
+                </div>
+                <div class="divl"></div>
+                <div class="srow">
+                  <span style="font-size:9px;color:var(--g700)">Permissão do Sistema</span>
+                  <span class="badge b-ok">✓ Concedida</span>
+                </div>
+                <div class="divl"></div>
+                <div class="srow">
+                  <span style="font-size:9px;color:var(--g700)">Android 13+ POST_NOTIFICATIONS</span>
+                  <span class="badge b-ok">✓ OK</span>
+                </div>
+              </div>
+              <div class="card">
+                <div class="ctitle">Token FCM</div>
+                <div class="val mono" style="background:var(--g50);padding:6px;border-radius:5px;border:1px solid var(--g200)">fHk9xM2qRpW:APA91bHy8VjKqLmN3tG5sPdY2wCzA7rEn1vBuIoXdFj</div>
+                <button class="btn btn-o btn-sm" style="margin-top:6px">📋 Copiar Token</button>
+              </div>
+              <div class="card">
+                <div class="ctitle">📨 Histórico desta Sessão</div>
+                <div style="display:flex;flex-direction:column;gap:5px">
+                  <div style="display:flex;align-items:center;gap:6px;padding:5px;background:var(--g50);border-radius:6px">
+                    <span style="font-size:12px">🎯</span>
+                    <div style="flex:1"><div style="font-size:8px;font-weight:600">Oferta Especial Marketdata</div><div style="font-size:7px;color:var(--g400)">14:32 · black_friday_24</div></div>
+                    <span class="badge b-ok">lida</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;padding:5px;background:var(--g50);border-radius:6px">
+                    <span style="font-size:12px">📊</span>
+                    <div style="flex:1"><div style="font-size:8px;font-weight:600">Relatório semanal disponível</div><div style="font-size:7px;color:var(--g400)">09:15 · weekly_report</div></div>
+                    <span class="badge b-warn">nova</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;padding:5px;background:var(--g50);border-radius:6px">
+                    <span style="font-size:12px">🚀</span>
+                    <div style="flex:1"><div style="font-size:8px;font-weight:600">Novo produto: Data Intelligence</div><div style="font-size:7px;color:var(--g400)">08:02 · product_launch</div></div>
+                    <span class="badge b-ok">lida</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-
-          <!-- Tags -->
-          <div class="sec">Tags de Segmentação</div>
-          <div style="display:flex;gap:6px;align-items:flex-end;margin-bottom:8px">
-            <div style="flex:1"><label class="fl">Nome da tag</label><input class="fi" id="nt" placeholder="ex: cliente_vip"></div>
-            <button class="btn btn-a btn-sm" style="width:auto;white-space:nowrap" onclick="addTag()">+ Tag</button>
-          </div>
-          <div class="chips" id="tagList">
-            <div class="tag">cliente_vip <span class="x" onclick="rmTag(this)">×</span></div>
-            <div class="tag">black_friday <span class="x" onclick="rmTag(this)">×</span></div>
-            <div class="tag">newsletter <span class="x" onclick="rmTag(this)">×</span></div>
-            <div class="tag">mobile_user <span class="x" onclick="rmTag(this)">×</span></div>
-          </div>
-
-          <!-- SDK method info -->
-          <div style="margin-top:14px;padding:10px;background:var(--g50);border-radius:9px;border:1px solid var(--g200)">
-            <div style="font-size:9px;color:var(--g500);line-height:1.7">
-              <code style="background:var(--g200);padding:1px 4px;border-radius:3px;color:var(--n700)">registrationManager.edit()</code><br>
-              &nbsp;&nbsp;.setAttribute("plano","premium")<br>
-              &nbsp;&nbsp;.addTag("cliente_vip")<br>
-              &nbsp;&nbsp;.commit()
-            </div>
+          <div class="bnav">
+            <button class="ni"><span class="ico">🏠</span><span class="ntxt">Início</span></button>
+            <button class="ni"><span class="ico">👤</span><span class="ntxt">Identidade</span></button>
+            <button class="ni on"><span class="ico">🔔</span><span class="ntxt">Push</span></button>
+            <button class="ni"><span class="ico">⚙️</span><span class="ntxt">Atributos</span></button>
+            <button class="ni"><span class="ico">📊</span><span class="ntxt">Analytics</span></button>
           </div>
         </div>
       </div>
-      <div class="bnav">
-        <button class="ni" onclick="nav('home')"><span class="ico">🏠</span><span class="ntxt">Início</span></button>
-        <button class="ni" onclick="nav('identity')"><span class="ico">👤</span><span class="ntxt">Identidade</span></button>
-        <button class="ni" onclick="nav('push')"><span class="ico">🔔</span><span class="ntxt">Push</span></button>
-        <button class="ni on" onclick="nav('attributes')"><span class="ico">⚙️</span><span class="ntxt">Atributos</span></button>
-        <button class="ni" onclick="nav('analytics')"><span class="ico">📊</span><span class="ntxt">Analytics</span></button>
-      </div>
     </div>
+  </div>
 
-    <!-- ████████ ANALYTICS ████████ -->
-    <div class="scr" id="analytics">
-      <div class="sb"><span class="time">9:41</span><div class="icons"><span>5G</span><span>▓▓</span></div></div>
-      <div class="hdr">
-        <div class="hdr-title">Analytics e Eventos</div>
-        <div class="hdr-sub">Rastreamento de eventos no SFMC</div>
-      </div>
-      <div class="body">
-        <div class="pad">
-
-          <!-- Custom event -->
-          <div class="card">
-            <div class="ctitle">📊 Evento Customizado</div>
-            <div class="fg"><label class="fl">Nome do Evento *</label><input class="fi" id="en" placeholder="ex: product_view, checkout_start"></div>
-            <div class="fg"><label class="fl">Atributos JSON (opcional)</label><textarea class="fi" id="ea" placeholder='{"produto":"SKU123","preco":"299.90","categoria":"tech"}'></textarea></div>
-            <button class="btn btn-p btn-sm" onclick="trackEvt()">▶ Rastrear Evento</button>
+  <!-- ════════════════════════════════════════════ -->
+  <!-- TELA 5: ATRIBUTOS & TAGS                    -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="screen-wrap">
+    <div class="screen-label">05 · Atributos &amp; Tags</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="swrap">
+        <div style="display:flex;flex-direction:column;height:480px;">
+          <div class="sb"><span class="time">9:41</span><div class="icons"><span>5G</span><span>▓▓</span></div></div>
+          <div class="hdr">
+            <div class="hdr-title">Atributos e Tags</div>
+            <div class="hdr-sub">Perfil do contato no SFMC</div>
           </div>
-
-          <!-- Page view -->
-          <div class="card">
-            <div class="ctitle">🌐 Page View</div>
-            <div class="fg"><label class="fl">URL da Página</label><input class="fi" id="pu" placeholder="https://marketdata.com.br/produtos"></div>
-            <div class="fg"><label class="fl">Título</label><input class="fi" id="pt" placeholder="Página de Produtos"></div>
-            <button class="btn btn-a btn-sm" onclick="trackPV()">▶ Rastrear Page View</button>
-          </div>
-
-          <!-- Event log -->
-          <div class="card">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">
-              <span class="ctitle" style="margin-bottom:0">Log da Sessão</span>
-              <button class="btn btn-t" onclick="clearLog()">Limpar</button>
+          <div class="body" style="flex:1;">
+            <div class="pad">
+              <div class="sec">Atributos Personalizados</div>
+              <div style="display:flex;gap:4px;align-items:flex-end;margin-bottom:7px">
+                <div style="flex:2"><label class="fl">Atributo</label><input class="fi" placeholder="ex: plano"></div>
+                <div style="flex:2"><label class="fl">Valor</label><input class="fi" placeholder="ex: premium"></div>
+                <button class="btn btn-p btn-sm" style="width:auto;white-space:nowrap">+ Add</button>
+              </div>
+              <div class="card" style="padding:3px 9px;margin-bottom:10px">
+                <div class="ar"><span class="ak">plano</span><span class="aeq">=</span><span class="av">premium</span></div>
+                <div class="ar"><span class="ak">segmento</span><span class="aeq">=</span><span class="av">varejo_b2b</span></div>
+                <div class="ar"><span class="ak">cidade</span><span class="aeq">=</span><span class="av">São Paulo</span></div>
+                <div class="ar"><span class="ak">empresa</span><span class="aeq">=</span><span class="av">Marketdata</span></div>
+              </div>
+              <div class="sec">Tags de Segmentação</div>
+              <div style="display:flex;gap:4px;align-items:flex-end;margin-bottom:7px">
+                <div style="flex:1"><label class="fl">Nome da tag</label><input class="fi" placeholder="ex: cliente_vip"></div>
+                <button class="btn btn-a btn-sm" style="width:auto;white-space:nowrap">+ Tag</button>
+              </div>
+              <div class="chips">
+                <div class="tag">cliente_vip</div>
+                <div class="tag">black_friday</div>
+                <div class="tag">newsletter</div>
+                <div class="tag">mobile_user</div>
+              </div>
+              <div class="coderef" style="margin-top:10px">
+                registrationManager.edit()<br>
+                &nbsp;&nbsp;.setAttribute("plano","premium")<br>
+                &nbsp;&nbsp;.addTag("cliente_vip")<br>
+                &nbsp;&nbsp;.commit()
+              </div>
             </div>
-            <div class="log" id="elog">Nenhum evento rastreado nesta sessão</div>
           </div>
-
-          <!-- SDK method reference -->
-          <div style="padding:10px;background:var(--g50);border-radius:9px;border:1px solid var(--g200)">
-            <div style="font-size:9px;color:var(--g500);line-height:1.7">
-              <code style="background:var(--g200);padding:1px 4px;border-radius:3px;color:var(--n700)">// Evento customizado</code><br>
-              sdk.eventManager.track(<br>
-              &nbsp;&nbsp;CustomEvent.builder("product_view")<br>
-              &nbsp;&nbsp;&nbsp;&nbsp;.setAttribute("sku","SKU123")<br>
-              &nbsp;&nbsp;&nbsp;&nbsp;.build()<br>
-              )<br><br>
-              <code style="background:var(--g200);padding:1px 4px;border-radius:3px;color:var(--n700)">// Page view</code><br>
-              sdk.analyticsManager.trackPageView(url,title,null)
-            </div>
+          <div class="bnav">
+            <button class="ni"><span class="ico">🏠</span><span class="ntxt">Início</span></button>
+            <button class="ni"><span class="ico">👤</span><span class="ntxt">Identidade</span></button>
+            <button class="ni"><span class="ico">🔔</span><span class="ntxt">Push</span></button>
+            <button class="ni on"><span class="ico">⚙️</span><span class="ntxt">Atributos</span></button>
+            <button class="ni"><span class="ico">📊</span><span class="ntxt">Analytics</span></button>
           </div>
         </div>
       </div>
-      <div class="bnav">
-        <button class="ni" onclick="nav('home')"><span class="ico">🏠</span><span class="ntxt">Início</span></button>
-        <button class="ni" onclick="nav('identity')"><span class="ico">👤</span><span class="ntxt">Identidade</span></button>
-        <button class="ni" onclick="nav('push')"><span class="ico">🔔</span><span class="ntxt">Push</span></button>
-        <button class="ni" onclick="nav('attributes')"><span class="ico">⚙️</span><span class="ntxt">Atributos</span></button>
-        <button class="ni on" onclick="nav('analytics')"><span class="ico">📊</span><span class="ntxt">Analytics</span></button>
-      </div>
     </div>
+  </div>
 
-    <!-- ████████ INBOX (In-App Messages) ████████ -->
-    <div class="scr" id="inbox">
-      <div class="sb"><span class="time">9:41</span><div class="icons"><span>5G</span><span>▓▓</span></div></div>
-      <div class="hdr">
-        <div class="hdr-title">Inbox SFMC</div>
-        <div class="hdr-sub">Mensagens In-App do Marketing Cloud</div>
-        <span class="hdr-chip c-info">2 não lidas</span>
-      </div>
-      <div class="body">
-        <div class="pad">
-          <div class="card" style="padding:4px 13px">
-            <!-- Item 1 - unread -->
-            <div class="inbox-item">
-              <div class="inbox-avatar" style="background:#FDE8CC">🎯</div>
-              <div class="inbox-body">
-                <div class="inbox-title">Oferta Black Friday: -30%</div>
-                <div class="inbox-preview">Aproveite o desconto exclusivo em toda linha Data Analytics até meia-noite</div>
+  <!-- ════════════════════════════════════════════ -->
+  <!-- TELA 6: ANALYTICS                           -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="screen-wrap">
+    <div class="screen-label">06 · Analytics</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="swrap">
+        <div style="display:flex;flex-direction:column;height:480px;">
+          <div class="sb"><span class="time">9:41</span><div class="icons"><span>5G</span><span>▓▓</span></div></div>
+          <div class="hdr">
+            <div class="hdr-title">Analytics e Eventos</div>
+            <div class="hdr-sub">Rastreamento de eventos no SFMC</div>
+          </div>
+          <div class="body" style="flex:1;">
+            <div class="pad">
+              <div class="card">
+                <div class="ctitle">📊 Evento Customizado</div>
+                <div class="fg"><label class="fl">Nome do Evento *</label><input class="fi" placeholder="ex: product_view, checkout_start"></div>
+                <div class="fg"><label class="fl">Atributos JSON (opcional)</label><textarea class="fi" placeholder='{"produto":"SKU123","preco":"299.90"}'></textarea></div>
+                <button class="btn btn-p btn-sm">▶ Rastrear Evento</button>
               </div>
-              <div class="inbox-meta">
-                <span class="inbox-time">14:32</span>
-                <span class="inbox-unread"></span>
+              <div class="card">
+                <div class="ctitle">🌐 Page View</div>
+                <div class="fg"><label class="fl">URL da Página</label><input class="fi" placeholder="https://marketdata.com.br/..."></div>
+                <div class="fg"><label class="fl">Título</label><input class="fi" placeholder="Página de Produtos"></div>
+                <button class="btn btn-a btn-sm">▶ Rastrear Page View</button>
               </div>
-            </div>
-            <!-- Item 2 - unread -->
-            <div class="inbox-item">
-              <div class="inbox-avatar" style="background:#E5EEFF">📊</div>
-              <div class="inbox-body">
-                <div class="inbox-title">Relatório Mensal — Novembro</div>
-                <div class="inbox-preview">Seu relatório de inteligência de mercado está disponível para download</div>
+              <div class="card">
+                <div class="ctitle">Log da Sessão</div>
+                <div class="log">[09:14:52] 📊 product_view
+   ↳ {"sku":"SKU123","cat":"tech"}
+[09:11:30] 🌐 Página Inicial
+   ↳ https://marketdata.com.br</div>
               </div>
-              <div class="inbox-meta">
-                <span class="inbox-time">09:15</span>
-                <span class="inbox-unread"></span>
-              </div>
-            </div>
-            <!-- Item 3 - read -->
-            <div class="inbox-item" style="opacity:.7">
-              <div class="inbox-avatar" style="background:#E3F5EE">🚀</div>
-              <div class="inbox-body">
-                <div class="inbox-title" style="font-weight:500">Novo Produto: Data Intelligence Pro</div>
-                <div class="inbox-preview">Conheça nossa mais nova solução de inteligência de dados em tempo real</div>
-              </div>
-              <div class="inbox-meta">
-                <span class="inbox-time">ontem</span>
-              </div>
-            </div>
-            <!-- Item 4 - read -->
-            <div class="inbox-item" style="opacity:.7">
-              <div class="inbox-avatar" style="background:#F0F4F8">👋</div>
-              <div class="inbox-body">
-                <div class="inbox-title" style="font-weight:500">Bem-vindo ao Marketdata!</div>
-                <div class="inbox-preview">Obrigado por baixar nosso app. Descubra como potencializar seu negócio</div>
-              </div>
-              <div class="inbox-meta">
-                <span class="inbox-time">02/06</span>
-              </div>
-            </div>
-            <!-- Item 5 - read -->
-            <div class="inbox-item" style="opacity:.7">
-              <div class="inbox-avatar" style="background:#FDE8CC">💡</div>
-              <div class="inbox-body">
-                <div class="inbox-title" style="font-weight:500">Dica: Segmentação Avançada</div>
-                <div class="inbox-preview">Aprenda a usar tags e atributos para criar campanhas mais personalizadas</div>
-              </div>
-              <div class="inbox-meta">
-                <span class="inbox-time">01/06</span>
+              <div class="coderef">
+                <code>// Evento customizado</code><br>
+                sdk.eventManager.track(<br>
+                &nbsp;&nbsp;CustomEvent.builder("product_view")<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;.setAttribute("sku","SKU123")<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;.build())<br>
+                <code>// Page view</code><br>
+                sdk.analyticsManager<br>
+                &nbsp;&nbsp;.trackPageView(url, title, null)
               </div>
             </div>
           </div>
-
-          <!-- SDK info -->
-          <div style="margin-top:4px;padding:10px;background:var(--g50);border-radius:9px;border:1px solid var(--g200)">
-            <div style="font-size:9px;color:var(--g500);line-height:1.7">
-              <code style="background:var(--g200);padding:1px 4px;border-radius:3px;color:var(--n700)">sdk.inboxMessageManager</code><br>
-              &nbsp;&nbsp;.messages // lista todas<br>
-              &nbsp;&nbsp;.unreadCount // contagem não lidas<br>
-              &nbsp;&nbsp;.markAllMessagesRead()
-            </div>
+          <div class="bnav">
+            <button class="ni"><span class="ico">🏠</span><span class="ntxt">Início</span></button>
+            <button class="ni"><span class="ico">👤</span><span class="ntxt">Identidade</span></button>
+            <button class="ni"><span class="ico">🔔</span><span class="ntxt">Push</span></button>
+            <button class="ni"><span class="ico">⚙️</span><span class="ntxt">Atributos</span></button>
+            <button class="ni on"><span class="ico">📊</span><span class="ntxt">Analytics</span></button>
           </div>
         </div>
       </div>
-      <div class="bnav">
-        <button class="ni" onclick="nav('home')"><span class="ico">🏠</span><span class="ntxt">Início</span></button>
-        <button class="ni" onclick="nav('identity')"><span class="ico">👤</span><span class="ntxt">Identidade</span></button>
-        <button class="ni" onclick="nav('push')"><span class="ico">🔔</span><span class="ntxt">Push</span></button>
-        <button class="ni" onclick="nav('attributes')"><span class="ico">⚙️</span><span class="ntxt">Atributos</span></button>
-        <button class="ni" onclick="nav('analytics')"><span class="ico">📊</span><span class="ntxt">Analytics</span></button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- TELA 7: INBOX                               -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="screen-wrap">
+    <div class="screen-label">07 · Inbox</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="swrap">
+        <div style="display:flex;flex-direction:column;height:480px;">
+          <div class="sb"><span class="time">9:41</span><div class="icons"><span>5G</span><span>▓▓</span></div></div>
+          <div class="hdr">
+            <div class="hdr-title">Inbox SFMC</div>
+            <div class="hdr-sub">Mensagens In-App do Marketing Cloud</div>
+            <span class="hdr-chip c-info">2 não lidas</span>
+          </div>
+          <div class="body" style="flex:1;">
+            <div class="pad">
+              <div class="card" style="padding:3px 9px">
+                <div class="inbox-item">
+                  <div class="inbox-avatar" style="background:#FDE8CC">🎯</div>
+                  <div class="inbox-body">
+                    <div class="inbox-title">Oferta Black Friday: -30%</div>
+                    <div class="inbox-preview">Aproveite o desconto exclusivo em toda linha Data Analytics</div>
+                  </div>
+                  <div class="inbox-meta"><span class="inbox-time">14:32</span><span class="inbox-unread"></span></div>
+                </div>
+                <div class="inbox-item">
+                  <div class="inbox-avatar" style="background:#E5EEFF">📊</div>
+                  <div class="inbox-body">
+                    <div class="inbox-title">Relatório Mensal — Nov</div>
+                    <div class="inbox-preview">Seu relatório de inteligência de mercado está disponível</div>
+                  </div>
+                  <div class="inbox-meta"><span class="inbox-time">09:15</span><span class="inbox-unread"></span></div>
+                </div>
+                <div class="inbox-item" style="opacity:.65">
+                  <div class="inbox-avatar" style="background:#E3F5EE">🚀</div>
+                  <div class="inbox-body">
+                    <div class="inbox-title" style="font-weight:500">Novo Produto: Data Intelligence Pro</div>
+                    <div class="inbox-preview">Conheça nossa solução de inteligência em tempo real</div>
+                  </div>
+                  <div class="inbox-meta"><span class="inbox-time">ontem</span></div>
+                </div>
+                <div class="inbox-item" style="opacity:.65">
+                  <div class="inbox-avatar" style="background:#F0F4F8">👋</div>
+                  <div class="inbox-body">
+                    <div class="inbox-title" style="font-weight:500">Bem-vindo ao Marketdata!</div>
+                    <div class="inbox-preview">Obrigado por baixar nosso app. Descubra como potencializar seu negócio</div>
+                  </div>
+                  <div class="inbox-meta"><span class="inbox-time">02/06</span></div>
+                </div>
+                <div class="inbox-item" style="opacity:.65">
+                  <div class="inbox-avatar" style="background:#FDE8CC">💡</div>
+                  <div class="inbox-body">
+                    <div class="inbox-title" style="font-weight:500">Dica: Segmentação Avançada</div>
+                    <div class="inbox-preview">Use tags e atributos para campanhas personalizadas</div>
+                  </div>
+                  <div class="inbox-meta"><span class="inbox-time">01/06</span></div>
+                </div>
+              </div>
+              <div class="coderef">
+                <code>sdk.inboxMessageManager</code><br>
+                &nbsp;&nbsp;.messages // lista todas<br>
+                &nbsp;&nbsp;.unreadCount // não lidas<br>
+                &nbsp;&nbsp;.markAllMessagesRead()
+              </div>
+            </div>
+          </div>
+          <div class="bnav">
+            <button class="ni"><span class="ico">🏠</span><span class="ntxt">Início</span></button>
+            <button class="ni"><span class="ico">👤</span><span class="ntxt">Identidade</span></button>
+            <button class="ni"><span class="ico">🔔</span><span class="ntxt">Push</span></button>
+            <button class="ni"><span class="ico">⚙️</span><span class="ntxt">Atributos</span></button>
+            <button class="ni on"><span class="ico">📊</span><span class="ntxt">Analytics</span></button>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 
-  </div><!-- /swrap -->
-</div><!-- /phone -->
-
-<div class="hint">Toque na splash para avançar · Navegue pelo bottom nav ou pelos botões acima</div>
-
-<!-- Snack -->
-<div id="snack"></div>
-
-<script>
-/* ── Navigation ─────────────────────────────────── */
-const screens = ['splash','home','identity','push','attributes','analytics','inbox'];
-
-function nav(id) {
-  document.querySelectorAll('.scr').forEach(s => s.classList.remove('on'));
-  document.querySelectorAll('.qt').forEach((b,i) => b.classList.toggle('qon', screens[i] === id));
-  const el = document.getElementById(id);
-  if (el) el.classList.add('on');
-}
-
-// Auto-advance splash → home after 2.5s
-setTimeout(() => nav('home'), 2500);
-
-/* ── Snackbar ───────────────────────────────────── */
-let _st;
-function snack(msg) {
-  const el = document.getElementById('snack');
-  el.textContent = msg;
-  el.classList.add('show');
-  clearTimeout(_st);
-  _st = setTimeout(() => el.classList.remove('show'), 2500);
-}
-
-/* ── Identity ───────────────────────────────────── */
-function saveIdentity() {
-  const ck = document.getElementById('ck').value.trim();
-  if (!ck) { snack('⚠️ Contact Key é obrigatório'); return; }
-  const fn = document.getElementById('fn').value||'—';
-  const ln = document.getElementById('ln').value||'—';
-  const em = document.getElementById('em').value||'—';
-  const ph = document.getElementById('ph').value||'—';
-  document.getElementById('curVals').textContent =
-    `contactKey : ${ck}\nfirstName  : ${fn}\nlastName   : ${ln}\nemail      : ${em}\nphone      : ${ph}`;
-  snack('✅ Identidade salva no SFMC!');
-}
-
-/* ── Push toggle ────────────────────────────────── */
-let pushOn = true;
-function togglePush() {
-  pushOn = !pushOn;
-  document.getElementById('ptog').className = 'tog ' + (pushOn ? 'on' : 'off');
-  document.getElementById('ptxt').textContent = pushOn
-    ? 'SDK: pushMessageManager.enablePush() ✓'
-    : 'SDK: pushMessageManager.disablePush()';
-  snack(pushOn ? '🔔 Push habilitado!' : '🔕 Push desabilitado');
-}
-
-/* ── Attributes ─────────────────────────────────── */
-function addAttr() {
-  const k = document.getElementById('ak').value.trim();
-  const v = document.getElementById('av').value.trim();
-  if (!k || !v) { snack('⚠️ Preencha chave e valor'); return; }
-  const row = document.createElement('div');
-  row.className = 'ar';
-  row.innerHTML = `<span class="ak">${k}</span><span class="aeq">=</span><span class="av">${v}</span><span class="adel" onclick="rmAttr(this)">🗑</span>`;
-  document.getElementById('attrList').appendChild(row);
-  document.getElementById('ak').value = '';
-  document.getElementById('av').value = '';
-  snack('✅ Atributo salvo no SFMC!');
-}
-function rmAttr(el) { el.parentElement.remove(); snack('🗑 Atributo removido'); }
-function rmTag(el) { el.parentElement.remove(); snack('🗑 Tag removida do SFMC'); }
-function addTag() {
-  const v = document.getElementById('nt').value.trim();
-  if (!v) { snack('⚠️ Digite o nome da tag'); return; }
-  const c = document.createElement('div');
-  c.className = 'tag';
-  c.innerHTML = `${v} <span class="x" onclick="rmTag(this)">×</span>`;
-  document.getElementById('tagList').appendChild(c);
-  document.getElementById('nt').value = '';
-  snack('🏷️ Tag adicionada no SFMC!');
-}
-
-/* ── Analytics ──────────────────────────────────── */
-function ts() { return new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',second:'2-digit'}); }
-function appendLog(line) {
-  const el = document.getElementById('elog');
-  if (el.textContent.startsWith('Nenhum')) el.textContent = '';
-  el.textContent = line + '\n' + el.textContent;
-}
-function trackEvt() {
-  const name = document.getElementById('en').value.trim();
-  if (!name) { snack('⚠️ Nome do evento obrigatório'); return; }
-  const attrs = document.getElementById('ea').value.trim();
-  if (attrs) { try { JSON.parse(attrs); } catch(e) { snack('⚠️ JSON inválido'); return; } }
-  appendLog(`[${ts()}] 📊 ${name}${attrs ? '\n   ↳ ' + attrs : ''}`);
-  snack(`✅ Evento "${name}" rastreado!`);
-  document.getElementById('en').value = '';
-  document.getElementById('ea').value = '';
-}
-function trackPV() {
-  const url = document.getElementById('pu').value.trim() || 'https://marketdata.com.br';
-  const title = document.getElementById('pt').value.trim() || 'Marketdata';
-  appendLog(`[${ts()}] 🌐 ${title}\n   ↳ ${url}`);
-  snack('✅ Page View rastreada!');
-  document.getElementById('pu').value = '';
-  document.getElementById('pt').value = '';
-}
-function clearLog() {
-  document.getElementById('elog').textContent = 'Nenhum evento rastreado nesta sessão';
-}
-</script>
+</div><!-- /gallery -->
 </body>
 </html>
