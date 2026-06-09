@@ -19,3 +19,20 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# ─── Salesforce Marketing Cloud SDK ───────────────────────────────────────────
+-keep class com.salesforce.marketingcloud.** { *; }
+-keep class com.exacttarget.** { *; }
+-dontwarn com.salesforce.marketingcloud.**
+-dontwarn com.exacttarget.**
+
+# Firebase Messaging
+-keep class com.google.firebase.messaging.** { *; }
+-dontwarn com.google.firebase.messaging.**
+
+# Kotlin coroutines
+-keepnames class kotlinx.coroutines.internal.MainDispatcherFactory {}
+-keepnames class kotlinx.coroutines.CoroutineExceptionHandler {}
+-keepclassmembernames class kotlinx.** {
+    volatile <fields>;
+}
